@@ -10,6 +10,7 @@ import requests
 import json
 import os
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
 
@@ -52,10 +53,12 @@ def get_fred(series_id: str) -> float | None:
 def load_existing_data() -> dict:
     """기존 data.json 읽기 (백워데이션 연속일 추적용)"""
     try:
-        with open("data.json", "r", encoding="utf-8") as f:
+        # 경로 수정: market-dashboard 폴더 안의 데이터를 읽음
+        with open("market-dashboard/data.json", "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception:
         return {}
+
 
 def calc_backwardation_days(existing: dict, vix_diff: float | None) -> dict:
     """
@@ -67,8 +70,6 @@ def calc_backwardation_days(existing: dict, vix_diff: float | None) -> dict:
     is_backwardation = vix_diff > 0
 
     # 1. KST 대신 미국 동부 시간(New_York) 기준으로 날짜 판별
-    # -> 밤 11시(장중)와 다음날 오전 7시(마감)를 '같은 거래일'로 묶어줍니다.
-    from zoneinfo import ZoneInfo
     today_est = datetime.now(timezone.utc).astimezone(
         ZoneInfo("America/New_York")
     ).strftime("%Y-%m-%d")
@@ -89,10 +90,9 @@ def calc_backwardation_days(existing: dict, vix_diff: float | None) -> dict:
         history = history[-15:] # 최근 15일 유지
 
     # 3. 연속 백워데이션 일수 '전면 재계산' (버그 원천 차단)
-    # 꼬이지 않도록 history 기록을 최신부터 역순으로 세어줍니다.
     consecutive = 0
     for day in reversed(history):
-        if day["backwardation"]:
+        if day.get("backwardation", False):
             consecutive += 1
         else:
             break
@@ -116,6 +116,7 @@ def calc_backwardation_days(existing: dict, vix_diff: float | None) -> dict:
         "is_backwardation": is_backwardation,
         "history": history
     }
+
 
 def main():
     print(f"📡 데이터 수집 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -142,7 +143,6 @@ def main():
     print("\n[백워데이션 추적]")
     backwardation = calc_backwardation_days(existing, vix_diff)
 
-    from zoneinfo import ZoneInfo
     output = {
         "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         "updated_kst": datetime.now(timezone.utc).astimezone(
@@ -153,18 +153,19 @@ def main():
             "VIX":        {"value": vix,       "unit": "",   "source": "Yahoo"},
             "VIX3M":      {"value": vix3m,     "unit": "",   "source": "Yahoo"},
             "VIX_DIFF":   {"value": vix_diff,  "unit": "",   "source": "Yahoo"},
-            "SKEW":       {"value": skew,       "unit": "",   "source": "Yahoo"},
-            "OVX":        {"value": ovx,        "unit": "",   "source": "Yahoo"},
-            "GVZ":        {"value": gvz,        "unit": "",   "source": "Yahoo"},
-            "PCR":        {"value": pcr,        "unit": "",   "source": "Yahoo"},
-            "HY_SPREAD":  {"value": hy_spread,  "unit": "%",  "source": "FRED"},
-            "IG_SPREAD":  {"value": ig_spread,  "unit": "%",  "source": "FRED"},
-            "TED_SPREAD": {"value": ted,        "unit": "bp", "source": "FRED"},
-            "SOFR":       {"value": sofr,       "unit": "%",  "source": "FRED"},
+            "SKEW":       {"value": skew,      "unit": "",   "source": "Yahoo"},
+            "OVX":        {"value": ovx,       "unit": "",   "source": "Yahoo"},
+            "GVZ":        {"value": gvz,       "unit": "",   "source": "Yahoo"},
+            "PCR":        {"value": pcr,       "unit": "",   "source": "Yahoo"},
+            "HY_SPREAD":  {"value": hy_spread, "unit": "%",  "source": "FRED"},
+            "IG_SPREAD":  {"value": ig_spread, "unit": "%",  "source": "FRED"},
+            "TED_SPREAD": {"value": ted,       "unit": "bp", "source": "FRED"},
+            "SOFR":       {"value": sofr,      "unit": "%",  "source": "FRED"},
         },
     }
 
-    with open("data.json", "w", encoding="utf-8") as f:
+    # 경로 수정: market-dashboard 폴더 안에 확실하게 저장
+    with open("market-dashboard/data.json", "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
     print(f"\n✅ data.json 저장 완료")
