@@ -22,12 +22,14 @@ jobs:
           cache: "pip"
 
       - name: 패키지 설치
-        run: pip install -r requirements.txt
+        run: pip install -r market-dashboard/requirements.txt
 
       - name: 데이터 수집
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-        run: python fetch_data.py
+        run: |
+          cd market-dashboard
+          python fetch_data.py
 
       - name: data.json 커밋 & 푸시
         run: |
