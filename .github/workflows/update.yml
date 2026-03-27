@@ -4,7 +4,6 @@ on:
   schedule:
     # 1. KST 오전 7:00 (월~금) -> UTC 오후 10:00 (일~목)
     - cron: '0 22 * * 0-4'
-    
     # 2. KST 오후 3:00, 오후 11:00 (월~금) -> UTC 오전 6:00, 오후 2:00 (월~금)
     - cron: '0 6,14 * * 1-5'
   workflow_dispatch:
@@ -32,20 +31,12 @@ jobs:
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: |
-          cd market-dashboard
-          python fetch_data.py
+          python market-dashboard/fetch_data.py
 
       - name: data.json 커밋 & 푸시
         run: |
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json
+          git add market-dashboard/data.json
           git diff --staged --quiet || git commit -m "📊 지표 업데이트: $(date -u '+%Y-%m-%d %H:%M UTC')"
-          git push
-      - name: Commit and Push changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
-          git commit -m "Update data.json" || exit 0
           git push
