@@ -57,55 +57,47 @@ def load_existing_data() -> dict:
     except Exception:
         return {}
 
-
 def calc_backwardation_days(existing: dict, vix_diff: float | None) -> dict:
     """
-    백워데이션(vix_diff > 0) 연속 거래일 계산
-    - 오늘 날짜 기준으로 같은 날 중복 업데이트 방지
-    - 백워데이션이 끊기면 카운트 리셋
+    백워데이션(vix_diff > 0) 연속 거래일 계산 (수정본)
     """
-    today_kst = datetime.now(timezone.utc).astimezone(
-        __import__("zoneinfo").ZoneInfo("Asia/Seoul")
-    ).strftime("%Y-%m-%d")
-
-    prev = existing.get("backwardation", {
-        "consecutive_days": 0,
-        "last_date": "",
-        "status": "normal",
-        "history": []  # 최근 10일 기록
-    })
-
-    consecutive = prev.get("consecutive_days", 0)
-    last_date   = prev.get("last_date", "")
-    history     = prev.get("history", [])
-
     if vix_diff is None:
-        # 데이터 없으면 유지
-        return prev
+        return existing.get("backwardation", {})
 
     is_backwardation = vix_diff > 0
 
-    if last_date == today_kst:
-        # 같은 날 재실행 → 오늘 기록만 업데이트 (카운트 변경 없음)
-        if history and history[-1]["date"] == today_kst:
-            history[-1]["diff"] = vix_diff
-            history[-1]["backwardation"] = is_backwardation
-    else:
-        # 새 거래일
-        if is_backwardation:
-            consecutive += 1
-        else:
-            consecutive = 0
+    # 1. KST 대신 미국 동부 시간(New_York) 기준으로 날짜 판별
+    # -> 밤 11시(장중)와 다음날 오전 7시(마감)를 '같은 거래일'로 묶어줍니다.
+    from zoneinfo import ZoneInfo
+    today_est = datetime.now(timezone.utc).astimezone(
+        ZoneInfo("America/New_York")
+    ).strftime("%Y-%m-%d")
 
+    prev = existing.get("backwardation", {})
+    history = prev.get("history", [])
+
+    # 2. 히스토리 기록 (같은 거래일이면 덮어쓰고, 아니면 새로 추가)
+    if history and history[-1]["date"] == today_est:
+        history[-1]["diff"] = vix_diff
+        history[-1]["backwardation"] = is_backwardation
+    else:
         history.append({
-            "date": today_kst,
+            "date": today_est,
             "diff": vix_diff,
             "backwardation": is_backwardation
         })
-        # 최근 15일만 유지
-        history = history[-15:]
+        history = history[-15:] # 최근 15일 유지
 
-    # 위험 상태 판정
+    # 3. 연속 백워데이션 일수 '전면 재계산' (버그 원천 차단)
+    # 꼬이지 않도록 history 기록을 최신부터 역순으로 세어줍니다.
+    consecutive = 0
+    for day in reversed(history):
+        if day["backwardation"]:
+            consecutive += 1
+        else:
+            break
+
+    # 4. 위험 상태 판정
     if not is_backwardation:
         status = "normal"
     elif consecutive >= 7:
@@ -119,12 +111,11 @@ def calc_backwardation_days(existing: dict, vix_diff: float | None) -> dict:
 
     return {
         "consecutive_days": consecutive,
-        "last_date": today_kst,
+        "last_date": today_est, # EST 기준으로 저장
         "status": status,
         "is_backwardation": is_backwardation,
         "history": history
     }
-
 
 def main():
     print(f"📡 데이터 수집 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
