@@ -1,15 +1,74 @@
 {
-  "updated_utc": "2025-03-27 06:00 UTC",
-  "updated_kst": "2025-03-27 15:00 KST",
+  "updated_utc": "2026-03-27 15:30 UTC",
+  "updated_kst": "2026-03-28 00:30 KST",
+  "backwardation": {
+    "consecutive_days": 1,
+    "last_date": "2026-03-27",
+    "status": "warn",
+    "is_backwardation": true,
+    "history": [
+      {
+        "date": "2026-03-27",
+        "diff": 1.03,
+        "backwardation": true
+      }
+    ]
+  },
   "indicators": {
-    "VIX":        { "value": null, "unit": "",   "source": "Yahoo" },
-    "SKEW":       { "value": null, "unit": "",   "source": "Yahoo" },
-    "OVX":        { "value": null, "unit": "",   "source": "Yahoo" },
-    "GVZ":        { "value": null, "unit": "",   "source": "Yahoo" },
-    "PCR":        { "value": null, "unit": "",   "source": "Yahoo" },
-    "HY_SPREAD":  { "value": null, "unit": "%",  "source": "FRED"  },
-    "IG_SPREAD":  { "value": null, "unit": "%",  "source": "FRED"  },
-    "TED_SPREAD": { "value": null, "unit": "bp", "source": "FRED"  },
-    "SOFR":       { "value": null, "unit": "%",  "source": "FRED"  }
+    "VIX": {
+      "value": 29.39,
+      "unit": "",
+      "source": "Yahoo"
+    },
+    "VIX3M": {
+      "value": 28.36,
+      "unit": "",
+      "source": "Yahoo"
+    },
+    "VIX_DIFF": {
+      "value": 1.03,
+      "unit": "",
+      "source": "Yahoo"
+    },
+    "SKEW": {
+      "value": 143.99,
+      "unit": "",
+      "source": "Yahoo"
+    },
+    "OVX": {
+      "value": 94.87,
+      "unit": "",
+      "source": "Yahoo"
+    },
+    "GVZ": {
+      "value": 42.87,
+      "unit": "",
+      "source": "Yahoo"
+    },
+    "PCR": {
+      "value": null,
+      "unit": "",
+      "source": "Yahoo"
+    },
+    "HY_SPREAD": {
+      "value": 3.21,
+      "unit": "%",
+      "source": "FRED"
+    },
+    "IG_SPREAD": {
+      "value": 0.88,
+      "unit": "%",
+      "source": "FRED"
+    },
+    "TED_SPREAD": {
+      "value": 0.09,
+      "unit": "bp",
+      "source": "FRED"
+    },
+    "SOFR": {
+      "value": 3.65,
+      "unit": "%",
+      "source": "FRED"
+    }
   }
 }
