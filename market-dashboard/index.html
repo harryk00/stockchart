@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>금융시장 변동성 모니터</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+KR:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #07090f;
+    --bg2:      #0d1117;
+    --bg3:      #12181f;
+    --border:   #1e2a36;
+    --text:     #c9d1d9;
+    --muted:    #4a5568;
+    --mono:     'Space Mono', monospace;
+    --sans:     'Noto Sans KR', sans-serif;
+
+    --safe:     #00e676;
+    --safe-bg:  rgba(0,230,118,.08);
+    --warn:     #ffb300;
+    --warn-bg:  rgba(255,179,0,.08);
+    --danger:   #ff1744;
+    --danger-bg:rgba(255,23,68,.08);
+    --unknown:  #4a5568;
+    --unknown-bg:rgba(74,85,104,.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    padding: 0 0 60px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ── 배경 격자 패턴 ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: .3;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── 헤더 ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 28px 0 22px;
+    margin-bottom: 36px;
+  }
+  .header-inner {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .brand-icon {
+    width: 38px; height: 38px; border-radius: 8px;
+    background: linear-gradient(135deg, #00e676 0%, #1de9b6 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  h1 {
+    font-family: var(--mono); font-size: 1.15rem; font-weight: 700;
+    letter-spacing: .04em; color: #e6edf3;
+  }
+  h1 span { color: var(--safe); }
+  .subtitle { font-size: .75rem; color: var(--muted); margin-top: 2px; letter-spacing: .05em; }
+
+  .meta {
+    text-align: right; font-family: var(--mono); font-size: .72rem; color: var(--muted);
+  }
+  .meta .update-time { color: var(--safe); margin-top: 3px; }
+
+  /* ── 섹션 타이틀 ── */
+  .section-title {
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .15em;
+    color: var(--muted); text-transform: uppercase;
+    padding: 0 0 10px; margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::before { content: '//'; color: var(--safe); }
+
+  /* ── 카드 그리드 ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
+  /* ── 지표 카드 ── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s, transform .15s;
+    cursor: default;
+  }
+  .card:hover { border-color: #2a3a4a; transform: translateY(-1px); }
+
+  /* 왼쪽 상태 바 */
+  .card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--status-color, var(--unknown));
+    border-radius: 10px 0 0 10px;
+  }
+
+  /* 배경 글로우 */
+  .card::after {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: radial-gradient(circle, var(--status-color, transparent) 0%, transparent 70%);
+    opacity: .04;
+    pointer-events: none;
+  }
+
+  .card.safe    { --status-color: var(--safe);    background: linear-gradient(135deg, var(--safe-bg) 0%, var(--bg2) 60%); }
+  .card.warn    { --status-color: var(--warn);    background: linear-gradient(135deg, var(--warn-bg) 0%, var(--bg2) 60%); }
+  .card.danger  { --status-color: var(--danger);  background: linear-gradient(135deg, var(--danger-bg) 0%, var(--bg2) 60%); }
+  .card.unknown { --status-color: var(--unknown); }
+
+  .card-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .card-name {
+    font-family: var(--mono); font-size: .82rem; font-weight: 700;
+    color: #e6edf3; letter-spacing: .06em;
+  }
+  .card-source {
+    font-family: var(--mono); font-size: .63rem; color: var(--muted);
+    background: var(--bg3); border: 1px solid var(--border);
+    padding: 2px 7px; border-radius: 4px;
+  }
+
+  .card-value {
+    font-family: var(--mono); font-size: 2rem; font-weight: 700;
+    color: var(--status-color, var(--unknown));
+    letter-spacing: -.02em; line-height: 1;
+    margin-bottom: 4px;
+  }
+  .card-value.loading {
+    color: var(--muted); font-size: 1.4rem;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+  .card-unit { font-size: .7rem; color: var(--muted); font-family: var(--mono); }
+
+  .card-label {
+    font-size: .73rem; color: var(--muted); margin: 10px 0 6px;
+    font-weight: 300; line-height: 1.4;
+  }
+
+  /* 임계값 바 */
+  .thresholds {
+    margin-top: 12px; display: flex; flex-direction: column; gap: 4px;
+  }
+  .threshold-item {
+    display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .66rem;
+  }
+  .threshold-dot {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  }
+  .threshold-dot.t-safe   { background: var(--safe); }
+  .threshold-dot.t-warn   { background: var(--warn); }
+  .threshold-dot.t-danger { background: var(--danger); }
+  .threshold-text { color: var(--muted); }
+  .threshold-text.active  { color: var(--text); font-weight: 700; }
+
+  /* 상태 배지 */
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--mono); font-size: .66rem; font-weight: 700;
+    padding: 3px 9px; border-radius: 20px; margin-top: 10px;
+    letter-spacing: .08em;
+  }
+  .status-badge::before { content: '●'; font-size: .5rem; }
+  .status-badge.safe   { background: var(--safe-bg);   color: var(--safe);   border: 1px solid rgba(0,230,118,.2); }
+  .status-badge.warn   { background: var(--warn-bg);   color: var(--warn);   border: 1px solid rgba(255,179,0,.2); }
+  .status-badge.danger { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(255,23,68,.2); animation: blink .8s step-end infinite; }
+  .status-badge.unknown{ background: var(--unknown-bg);color: var(--muted);  border: 1px solid rgba(74,85,104,.2); }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  /* ── 종합 위험도 바 ── */
+  .risk-panel {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px 24px; margin-bottom: 32px;
+  }
+  .risk-panel-title {
+    font-family: var(--mono); font-size: .75rem; color: #e6edf3;
+    margin-bottom: 16px; letter-spacing: .05em;
+  }
+  .risk-bar-wrap { position: relative; }
+  .risk-bar-track {
+    height: 10px; border-radius: 99px; overflow: hidden;
+    background: linear-gradient(90deg, var(--safe) 0%, var(--warn) 50%, var(--danger) 100%);
+    opacity: .25;
+  }
+  .risk-bar-fill {
+    height: 10px; border-radius: 99px;
+    background: linear-gradient(90deg, var(--safe) 0%, var(--warn) 50%, var(--danger) 100%);
+    transition: width 1s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+  .risk-pointer {
+    position: absolute; top: -4px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: white; border: 2px solid var(--bg);
+    box-shadow: 0 0 8px rgba(255,255,255,.3);
+    transform: translateX(-50%);
+    transition: left 1s cubic-bezier(.4,0,.2,1);
+  }
+  .risk-labels {
+    display: flex; justify-content: space-between;
+    margin-top: 8px; font-family: var(--mono); font-size: .62rem; color: var(--muted);
+  }
+  .risk-score-text {
+    font-family: var(--mono); font-size: 2.5rem; font-weight: 700;
+    margin-bottom: 4px; transition: color .5s;
+  }
+  .risk-score-label { font-size: .75rem; color: var(--muted); }
+
+  /* ── 주석 박스 ── */
+  .note-box {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-left: 3px solid var(--warn);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px; margin-bottom: 14px;
+    font-size: .78rem; color: var(--muted); line-height: 1.6;
+  }
+  .note-box strong { color: var(--warn); font-family: var(--mono); font-size: .7rem; }
+
+  /* ── 푸터 ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 20px; margin-top: 20px;
+    font-size: .7rem; color: var(--muted);
+    font-family: var(--mono); text-align: center; line-height: 1.8;
+  }
+
+  @media (max-width: 600px) {
+    .card-value { font-size: 1.6rem; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ── 헤더 ── -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">📡</div>
+        <div>
+          <h1>MARKET<span>.</span>MONITOR</h1>
+          <div class="subtitle">금융시장 변동성 실시간 대시보드</div>
+        </div>
+      </div>
+      <div class="meta">
+        <div>DATA SOURCE: FRED · YAHOO FINANCE</div>
+        <div class="update-time" id="updated-time">로딩 중...</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── 종합 위험도 ── -->
+  <div class="section-title">종합 시장 스트레스 지수</div>
+  <div class="risk-panel">
+    <div style="display:flex;align-items:flex-end;gap:24px;margin-bottom:18px">
+      <div>
+        <div class="risk-score-text" id="risk-score">—</div>
+        <div class="risk-score-label">/ 100 pts &nbsp;|&nbsp; <span id="risk-label">계산 중</span></div>
+      </div>
+    </div>
+    <div class="risk-bar-wrap">
+      <div class="risk-bar-track"></div>
+      <div class="risk-bar-fill" id="risk-bar"></div>
+      <div class="risk-pointer" id="risk-ptr" style="left:0%"></div>
+    </div>
+    <div class="risk-labels">
+      <span>0 — 정상</span><span>25</span><span>50 — 경계</span><span>75</span><span>100 — 위기</span>
+    </div>
+  </div>
+
+  <!-- ── 변동성 지표 ── -->
+  <div class="section-title">변동성 지표</div>
+  <div class="grid" id="vol-grid"></div>
+
+  <!-- ── 신용 스프레드 ── -->
+  <div class="section-title">신용 스프레드</div>
+  <div class="grid" id="spread-grid"></div>
+
+  <!-- ── 단기 유동성 ── -->
+  <div class="section-title">단기 자금시장</div>
+  <div class="grid" id="money-grid"></div>
+
+  <!-- ── 주석 ── -->
+  <div class="note-box">
+    <strong>⚠ MOVE INDEX / FRA-OIS / Cross-Currency Basis</strong><br>
+    ICE 전용 데이터로 무료 API 미제공. MOVE는 Bloomberg 또는 ICE DataConnect 구독 필요.
+    FRA-OIS 근사치는 SOFR-OIS 스프레드(FRED: SOFR)로 대체 모니터링 권장.
+  </div>
+  <div class="note-box">
+    <strong>🕐 업데이트 주기</strong><br>
+    GitHub Actions가 평일 KST 15:00 · 23:00 · 07:00 에 자동 갱신.
+    FRED 데이터는 T+1일 지연(일별 공표 기준). 장중 실시간은 Yahoo Finance 기준.
+  </div>
+
+  <footer>
+    데이터 출처: FRED (St. Louis Fed) · Yahoo Finance · CBOE<br>
+    본 대시보드는 정보 제공 목적이며 투자 권유가 아닙니다.<br>
+    Built with GitHub Pages + GitHub Actions — 완전 무료
+  </footer>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+// 지표 정의 (임계값 + 라벨)
+// ══════════════════════════════════════════════════════════════════
+const INDICATORS = {
+
+  // 변동성
+  VIX: {
+    name: "VIX",
+    label: "CBOE 변동성 지수",
+    desc: "시장의 단기 공포 수준. S&P 500 옵션 내재변동성.",
+    source: "Yahoo",
+    thresholds: [
+      { level: "safe",   text: "< 20  →  정상 구간", min: 0,  max: 20  },
+      { level: "warn",   text: "20~30 →  긴장 시작", min: 20, max: 30  },
+      { level: "danger", text: "30+   →  위험 구간", min: 30, max: 999 },
+    ],
+    score: v => v == null ? 0 : v < 20 ? 0 : v < 30 ? (v-20)/10*30 : Math.min(60+(v-30)*1.5, 100),
+  },
+
+  SKEW: {
+    name: "SKEW",
+    label: "CBOE SKEW 지수",
+    desc: "극단적 하락(tail risk)에 대한 옵션 시장의 프라이싱.",
+    source: "Yahoo",
+    thresholds: [
+      { level: "safe",   text: "< 130  →  정상",          min: 0,   max: 130 },
+      { level: "warn",   text: "130~140 →  하방 tail 확대", min: 130, max: 140 },
+      { level: "danger", text: "140+   →  극단적 하락 프라이싱", min: 140, max: 999 },
+    ],
+    score: v => v == null ? 0 : v < 130 ? 0 : v < 140 ? (v-130)/10*40 : Math.min(40+(v-140)*2, 100),
+  },
+
+  OVX: {
+    name: "OVX",
+    label: "원유 변동성 지수",
+    desc: "WTI 원유 옵션 내재변동성 (에너지 시장 불확실성).",
+    source: "Yahoo",
+    thresholds: [
+      { level: "safe",   text: "< 40   →  정상",      min: 0,  max: 40  },
+      { level: "warn",   text: "40~60  →  경계",       min: 40, max: 60  },
+      { level: "danger", text: "60+    →  고변동성",   min: 60, max: 999 },
+    ],
+    score: v => v == null ? 0 : v < 40 ? 0 : v < 60 ? (v-40)/20*30 : Math.min(30+(v-60)*1.5, 70),
+  },
+
+  GVZ: {
+    name: "GVZ",
+    label: "금 변동성 지수",
+    desc: "금(Gold) 옵션 내재변동성 (안전자산 수요 척도).",
+    source: "Yahoo",
+    thresholds: [
+      { level: "safe",   text: "< 15  →  정상",    min: 0,  max: 15  },
+      { level: "warn",   text: "15~25 →  불안정",  min: 15, max: 25  },
+      { level: "danger", text: "25+   →  고변동",  min: 25, max: 999 },
+    ],
+    score: v => v == null ? 0 : v < 15 ? 0 : v < 25 ? (v-15)/10*25 : Math.min(25+(v-25)*1.5, 60),
+  },
+
+  PCR: {
+    name: "PCR",
+    label: "Put / Call Ratio",
+    desc: "풋 대비 콜 옵션 비율. 투자자 심리 과열/공포 지표.",
+    source: "Yahoo",
+    thresholds: [
+      { level: "warn",   text: "< 0.6   →  과열 경고",         min: 0,   max: 0.6 },
+      { level: "safe",   text: "0.6~1.1 →  정상 범위",          min: 0.6, max: 1.1 },
+      { level: "warn",   text: "1.1~1.3 →  극단적 공포 (단기 바닥)", min: 1.1, max: 1.3 },
+      { level: "danger", text: "1.3+    →  패닉 수준",           min: 1.3, max: 999 },
+    ],
+    score: v => v == null ? 0 : v < 0.6 ? (0.6-v)/0.6*40 : v <= 1.1 ? 0 : v < 1.3 ? (v-1.1)/0.2*40 : Math.min(40+(v-1.3)*50, 100),
+  },
+
+  // 신용 스프레드
+  HY_SPREAD: {
+    name: "HY SPREAD",
+    label: "미 하이일드 스프레드",
+    desc: "ICE BofA HY OAS. 정크본드-국채 금리차. 경기 위험도 핵심 지표.",
+    source: "FRED",
+    thresholds: [
+      { level: "safe",   text: "< 5%  →  정상",                  min: 0, max: 5   },
+      { level: "warn",   text: "5~6%  →  1차 경기둔화 경계",       min: 5, max: 6   },
+      { level: "warn",   text: "6~7%  →  위험자산 압박",            min: 6, max: 7   },
+      { level: "danger", text: "7%+   →  심각한 위험",              min: 7, max: 999 },
+    ],
+    score: v => v == null ? 0 : v < 5 ? 0 : v < 7 ? (v-5)/2*50 : Math.min(50+(v-7)*15, 100),
+  },
+
+  IG_SPREAD: {
+    name: "IG SPREAD",
+    label: "투자등급 회사채 스프레드",
+    desc: "ICE BofA IG OAS. 우량 회사채-국채 금리차.",
+    source: "FRED",
+    thresholds: [
+      { level: "safe",   text: "< 1.5% (150bp) →  정상",     min: 0,   max: 1.5 },
+      { level: "warn",   text: "1.5~2.5% →  리스크오프 국면",  min: 1.5, max: 2.5 },
+      { level: "danger", text: "2.5%+    →  위험",            min: 2.5, max: 999 },
+    ],
+    score: v => v == null ? 0 : v < 1.5 ? 0 : v < 2.5 ? (v-1.5)/1*40 : Math.min(40+(v-2.5)*20, 100),
+  },
+
+  // 단기 자금
+  TED_SPREAD: {
+    name: "TED SPREAD",
+    label: "TED 스프레드",
+    desc: "3개월 LIBOR − 3개월 국채금리. 은행 간 신용 위험 척도.",
+    source: "FRED",
+    thresholds: [
+      { level: "safe",   text: "< 50bp  →  정상",        min: 0,  max: 0.5 },
+      { level: "warn",   text: "50~100bp →  스트레스 징후", min: 0.5, max: 1   },
+      { level: "danger", text: "100bp+   →  시스템 위기",   min: 1,  max: 999 },
+    ],
+    score: v => v == null ? 0 : v < 0.5 ? 0 : v < 1 ? (v-0.5)/0.5*50 : Math.min(50+(v-1)*30, 100),
+  },
+
+  SOFR: {
+    name: "SOFR",
+    label: "SOFR 금리",
+    desc: "Secured Overnight Financing Rate. 단기 자금시장 긴장 척도 (TED 대체).",
+    source: "FRED",
+    thresholds: [
+      { level: "safe",   text: "기준금리 ±0.1% →  정상",   min: 0, max: 100 },
+    ],
+    score: () => 0,
+    noLevel: true,
+  },
+};
+
+// ══════════════════════════════════════════════════════════════════
+// 임계값 평가
+// ══════════════════════════════════════════════════════════════════
+function getLevel(key, value) {
+  const def = INDICATORS[key];
+  if (!def || value == null || def.noLevel) return "unknown";
+  for (const t of def.thresholds) {
+    if (value >= t.min && value < t.max) return t.level;
+  }
+  return def.thresholds[def.thresholds.length - 1].level;
+}
+
+function getActiveThreshold(key, value) {
+  const def = INDICATORS[key];
+  if (!def || value == null) return null;
+  for (const t of def.thresholds) {
+    if (value >= t.min && value < t.max) return t.text;
+  }
+  return def.thresholds[def.thresholds.length - 1].text;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// 카드 렌더링
+// ══════════════════════════════════════════════════════════════════
+const LEVEL_LABEL = { safe: "정상", warn: "경계", danger: "위험", unknown: "데이터 없음" };
+
+function renderCard(key, data) {
+  const def = INDICATORS[key];
+  if (!def) return "";
+
+  const val   = data?.value;
+  const level = getLevel(key, val);
+  const active= getActiveThreshold(key, val);
+
+  const displayVal = val == null
+    ? '<span class="loading">···</span>'
+    : `${val.toLocaleString()}`;
+
+  const unit = data?.unit ?? "";
+
+  const thresholdsHtml = (def.thresholds || []).map(t => {
+    const isActive = active === t.text;
+    return `<div class="threshold-item">
+      <div class="threshold-dot t-${t.level}"></div>
+      <span class="threshold-text ${isActive ? 'active' : ''}">${t.text}</span>
+    </div>`;
+  }).join("");
+
+  return `<div class="card ${level}">
+    <div class="card-head">
+      <div class="card-name">${def.name}</div>
+      <div class="card-source">${def.source}</div>
+    </div>
+    <div class="card-value">${displayVal}<span style="font-size:.9rem"> ${unit}</span></div>
+    <div class="card-label">${def.label}<br><span style="font-size:.68rem;opacity:.6">${def.desc}</span></div>
+    <div class="thresholds">${thresholdsHtml}</div>
+    <div class="status-badge ${level}">${LEVEL_LABEL[level]}</div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// 종합 스트레스 점수
+// ══════════════════════════════════════════════════════════════════
+function calcRiskScore(indicators) {
+  const weights = { VIX: .25, SKEW: .15, HY_SPREAD: .25, IG_SPREAD: .15, TED_SPREAD: .1, PCR: .1 };
+  let total = 0, wSum = 0;
+  for (const [key, w] of Object.entries(weights)) {
+    const def = INDICATORS[key];
+    const val = indicators[key]?.value;
+    if (def && val != null) { total += def.score(val) * w; wSum += w; }
+  }
+  return wSum > 0 ? Math.round(total / wSum) : null;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// 메인
+// ══════════════════════════════════════════════════════════════════
+async function loadData() {
+  let data = { indicators: {} };
+  try {
+    const res = await fetch(`data.json?t=${Date.now()}`);
+    data = await res.json();
+  } catch (e) {
+    console.warn("data.json 로드 실패:", e);
+  }
+
+  const ind = data.indicators || {};
+
+  // 업데이트 시간
+  document.getElementById("updated-time").textContent =
+    `마지막 업데이트: ${data.updated_kst || data.updated_utc || "알 수 없음"}`;
+
+  // 카드 그룹 렌더링
+  document.getElementById("vol-grid").innerHTML =
+    ["VIX","SKEW","OVX","GVZ","PCR"].map(k => renderCard(k, ind[k])).join("");
+  document.getElementById("spread-grid").innerHTML =
+    ["HY_SPREAD","IG_SPREAD"].map(k => renderCard(k, ind[k])).join("");
+  document.getElementById("money-grid").innerHTML =
+    ["TED_SPREAD","SOFR"].map(k => renderCard(k, ind[k])).join("");
+
+  // 종합 점수
+  const score = calcRiskScore(ind);
+  const scoreEl = document.getElementById("risk-score");
+  const labelEl = document.getElementById("risk-label");
+  const barEl   = document.getElementById("risk-bar");
+  const ptrEl   = document.getElementById("risk-ptr");
+
+  if (score !== null) {
+    scoreEl.textContent = score;
+    const pct = Math.min(score, 100);
+    barEl.style.width  = pct + "%";
+    ptrEl.style.left   = pct + "%";
+
+    let color, label;
+    if (score < 25)       { color = "var(--safe)";   label = "🟢 정상 구간"; }
+    else if (score < 50)  { color = "var(--warn)";   label = "🟡 주의 필요"; }
+    else if (score < 75)  { color = "var(--warn)";   label = "🟠 경계 구간"; }
+    else                  { color = "var(--danger)";  label = "🔴 위험 경보"; }
+
+    scoreEl.style.color = color;
+    labelEl.textContent = label;
+  }
+}
+
+loadData();
+// 5분마다 자동 새로고침
+setInterval(loadData, 5 * 60 * 1000);
+</script>
+</body>
+</html>
