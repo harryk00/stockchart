@@ -46,6 +46,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add market-dashboard/data.json
-          git commit -m "Update market data" || exit 0
+          git add -A
+          git commit -m "Update data.json" || exit 0
           git push
