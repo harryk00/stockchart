@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-03-29 22:39 UTC",
-  "updated_kst": "2026-03-30 07:39 KST",
+  "updated_utc": "2026-03-30 07:55 UTC",
+  "updated_kst": "2026-03-30 16:55 KST",
   "backwardation": {
-    "consecutive_days": 2,
-    "last_date": "2026-03-29",
+    "consecutive_days": 3,
+    "last_date": "2026-03-30",
     "status": "warn",
     "is_backwardation": true,
     "history": [
@@ -16,12 +16,17 @@
         "date": "2026-03-29",
         "diff": 1.78,
         "backwardation": true
+      },
+      {
+        "date": "2026-03-30",
+        "diff": 1.69,
+        "backwardation": true
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 31.05,
+      "value": 30.96,
       "unit": "",
       "source": "Yahoo"
     },
@@ -31,7 +36,7 @@
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": 1.78,
+      "value": 1.69,
       "unit": "",
       "source": "Yahoo"
     },
