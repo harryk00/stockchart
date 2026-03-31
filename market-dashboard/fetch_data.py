@@ -1,8 +1,6 @@
 """
 금융시장 변동성 지표 수집 스크립트
-- Yahoo Finance: VIX, VIX3M, SKEW, OVX, GVZ, PCR
-- FRED API (무료): HY Spread, IG Spread, TED Spread, SOFR
-- VIX 백워데이션 연속 거래일 추적
+추가: 전일 대비 변화량, 10Y-2Y 금리역전, DXY, STLFSI
 """
 
 import yfinance as yf
@@ -10,7 +8,6 @@ import requests
 import json
 import os
 from datetime import datetime, timezone
-from zoneinfo import ZoneInfo
 
 FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
 
@@ -26,6 +23,19 @@ def get_yahoo(ticker: str) -> float | None:
     return None
 
 
+def get_yahoo_prev(ticker: str) -> float | None:
+    """전일 종가 (2번째 최근값)"""
+    try:
+        t = yf.Ticker(ticker)
+        hist = t.history(period="10d")
+        closes = hist["Close"].dropna()
+        if len(closes) >= 2:
+            return round(float(closes.iloc[-2]), 2)
+    except Exception as e:
+        print(f"  [Yahoo 전일 오류] {ticker}: {e}")
+    return None
+
+
 def get_fred(series_id: str) -> float | None:
     if not FRED_API_KEY:
         print(f"  [FRED 건너뜀] API 키 없음 ({series_id})")
@@ -37,108 +47,138 @@ def get_fred(series_id: str) -> float | None:
             "api_key": FRED_API_KEY,
             "file_type": "json",
             "sort_order": "desc",
-            "limit": 5,
+            "limit": 10,
         }
         r = requests.get(url, params=params, timeout=15)
         r.raise_for_status()
-        for obs in r.json().get("observations", []):
-            val = obs.get("value", ".")
-            if val not in (".", ""):
-                return round(float(val), 3)
+        obs_list = [o for o in r.json().get("observations", []) if o.get("value",".")  not in (".",  "")]
+        if len(obs_list) >= 1:
+            return round(float(obs_list[0]["value"]), 3)
     except Exception as e:
         print(f"  [FRED 오류] {series_id}: {e}")
     return None
 
 
-def load_existing_data() -> dict:
-    """기존 data.json 읽기 (백워데이션 연속일 추적용)"""
+def get_fred_prev(series_id: str) -> float | None:
+    """FRED 전일(이전) 관측값"""
+    if not FRED_API_KEY:
+        return None
     try:
-        # 경로 수정: market-dashboard 폴더 안의 데이터를 읽음
-        with open("market-dashboard/data.json", "r", encoding="utf-8") as f:
+        url = "https://api.stlouisfed.org/fred/series/observations"
+        params = {
+            "series_id": series_id,
+            "api_key": FRED_API_KEY,
+            "file_type": "json",
+            "sort_order": "desc",
+            "limit": 10,
+        }
+        r = requests.get(url, params=params, timeout=15)
+        r.raise_for_status()
+        obs_list = [o for o in r.json().get("observations", []) if o.get("value", ".") not in (".", "")]
+        if len(obs_list) >= 2:
+            return round(float(obs_list[1]["value"]), 3)
+    except Exception as e:
+        print(f"  [FRED 전일 오류] {series_id}: {e}")
+    return None
+
+
+def calc_change(curr, prev):
+    """전일 대비 변화량 계산"""
+    if curr is None or prev is None:
+        return None
+    return round(curr - prev, 3)
+
+
+def load_existing_data() -> dict:
+    try:
+        with open("data.json", "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception:
         return {}
 
 
-def calc_backwardation_days(existing: dict, vix_diff: float | None) -> dict:
-    """
-    백워데이션(vix_diff > 0) 연속 거래일 계산 (수정본)
-    """
+def calc_backwardation_days(existing: dict, vix_diff) -> dict:
+    from zoneinfo import ZoneInfo
+    today_kst = datetime.now(timezone.utc).astimezone(
+        ZoneInfo("Asia/Seoul")
+    ).strftime("%Y-%m-%d")
+
+    prev = existing.get("backwardation", {
+        "consecutive_days": 0, "last_date": "",
+        "status": "normal", "history": []
+    })
+
+    consecutive = prev.get("consecutive_days", 0)
+    last_date   = prev.get("last_date", "")
+    history     = prev.get("history", [])
+
     if vix_diff is None:
-        return existing.get("backwardation", {})
+        return prev
 
     is_backwardation = vix_diff > 0
 
-    # 1. KST 대신 미국 동부 시간(New_York) 기준으로 날짜 판별
-    today_est = datetime.now(timezone.utc).astimezone(
-        ZoneInfo("America/New_York")
-    ).strftime("%Y-%m-%d")
-
-    prev = existing.get("backwardation", {})
-    history = prev.get("history", [])
-
-    # 2. 히스토리 기록 (같은 거래일이면 덮어쓰고, 아니면 새로 추가)
-    if history and history[-1]["date"] == today_est:
-        history[-1]["diff"] = vix_diff
-        history[-1]["backwardation"] = is_backwardation
+    if last_date == today_kst:
+        if history and history[-1]["date"] == today_kst:
+            history[-1]["diff"] = vix_diff
+            history[-1]["backwardation"] = is_backwardation
     else:
-        history.append({
-            "date": today_est,
-            "diff": vix_diff,
-            "backwardation": is_backwardation
-        })
-        history = history[-15:] # 최근 15일 유지
+        consecutive = (consecutive + 1) if is_backwardation else 0
+        history.append({"date": today_kst, "diff": vix_diff, "backwardation": is_backwardation})
+        history = history[-15:]
 
-    # 3. 연속 백워데이션 일수 '전면 재계산' (버그 원천 차단)
-    consecutive = 0
-    for day in reversed(history):
-        if day.get("backwardation", False):
-            consecutive += 1
-        else:
-            break
-
-    # 4. 위험 상태 판정
-    if not is_backwardation:
-        status = "normal"
-    elif consecutive >= 7:
-        status = "crisis"    # 매우 심각한 위기
-    elif consecutive >= 5:
-        status = "danger"    # 위험
-    elif consecutive >= 1:
-        status = "warn"      # 백워데이션 시작
+    if not is_backwardation:        status = "normal"
+    elif consecutive >= 7:          status = "crisis"
+    elif consecutive >= 5:          status = "danger"
+    else:                           status = "warn"
 
     print(f"  백워데이션 연속일: {consecutive}일 ({status})")
-
     return {
-        "consecutive_days": consecutive,
-        "last_date": today_est, # EST 기준으로 저장
-        "status": status,
-        "is_backwardation": is_backwardation,
-        "history": history
+        "consecutive_days": consecutive, "last_date": today_kst,
+        "status": status, "is_backwardation": is_backwardation, "history": history
+    }
+
+
+def make_ind(value, unit, source, prev=None):
+    change = calc_change(value, prev)
+    return {
+        "value": value,
+        "prev":  prev,
+        "change": change,
+        "unit": unit,
+        "source": source,
     }
 
 
 def main():
+    from zoneinfo import ZoneInfo
     print(f"📡 데이터 수집 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
     existing = load_existing_data()
 
+    # ── Yahoo Finance ──────────────────────────────────────────────
     print("\n[Yahoo Finance]")
-    vix   = get_yahoo("^VIX");   print(f"  VIX:   {vix}")
-    vix3m = get_yahoo("^VIX3M"); print(f"  VIX3M: {vix3m}")
-    skew  = get_yahoo("^SKEW");  print(f"  SKEW:  {skew}")
-    ovx   = get_yahoo("^OVX");   print(f"  OVX:   {ovx}")
-    gvz   = get_yahoo("^GVZ");   print(f"  GVZ:   {gvz}")
-    pcr   = get_yahoo("^PCCE");  print(f"  PCR:   {pcr}")
+    vix      = get_yahoo("^VIX");    vix_p  = get_yahoo_prev("^VIX");   print(f"  VIX:   {vix} (전일 {vix_p})")
+    vix3m    = get_yahoo("^VIX3M");  vix3m_p= get_yahoo_prev("^VIX3M"); print(f"  VIX3M: {vix3m}")
+    skew     = get_yahoo("^SKEW");   skew_p = get_yahoo_prev("^SKEW");   print(f"  SKEW:  {skew}")
+    ovx      = get_yahoo("^OVX");    ovx_p  = get_yahoo_prev("^OVX");    print(f"  OVX:   {ovx}")
+    gvz      = get_yahoo("^GVZ");    gvz_p  = get_yahoo_prev("^GVZ");    print(f"  GVZ:   {gvz}")
+    pcr      = get_yahoo("^PCCE");   pcr_p  = get_yahoo_prev("^PCCE");   print(f"  PCR:   {pcr}")
+    dxy      = get_yahoo("DX-Y.NYB");dxy_p  = get_yahoo_prev("DX-Y.NYB");print(f"  DXY:   {dxy}")
 
-    vix_diff = round(vix - vix3m, 2) if vix is not None and vix3m is not None else None
-    print(f"  VIX 기간구조 차이(1m-3m): {vix_diff}")
+    vix_diff   = round(vix - vix3m, 2)   if vix   and vix3m   else None
+    vix_diff_p = round(vix_p - vix3m_p, 2) if vix_p and vix3m_p else None
+    print(f"  VIX 기간구조: {vix_diff}")
 
+    # ── FRED API ──────────────────────────────────────────────────
     print("\n[FRED API]")
-    hy_spread = get_fred("BAMLH0A0HYM2"); print(f"  HY Spread: {hy_spread}")
-    ig_spread = get_fred("BAMLC0A0CM");   print(f"  IG Spread: {ig_spread}")
-    ted       = get_fred("TEDRATE");      print(f"  TED Spread: {ted}")
-    sofr      = get_fred("SOFR");         print(f"  SOFR: {sofr}")
+    hy   = get_fred("BAMLH0A0HYM2"); hy_p  = get_fred_prev("BAMLH0A0HYM2"); print(f"  HY Spread: {hy}")
+    ig   = get_fred("BAMLC0A0CM");   ig_p  = get_fred_prev("BAMLC0A0CM");   print(f"  IG Spread: {ig}")
+    ted  = get_fred("TEDRATE");      ted_p = get_fred_prev("TEDRATE");       print(f"  TED:       {ted}")
+    sofr = get_fred("SOFR");         sofr_p= get_fred_prev("SOFR");          print(f"  SOFR:      {sofr}")
+    # 10Y-2Y 금리 역전 (경기침체 선행지표)
+    t10y2y   = get_fred("T10Y2Y");   t10y2y_p = get_fred_prev("T10Y2Y");    print(f"  10Y-2Y:    {t10y2y}")
+    # STLFSI (연준 공식 금융 스트레스 지수)
+    stlfsi   = get_fred("STLFSI4");  stlfsi_p = get_fred_prev("STLFSI4");   print(f"  STLFSI4:   {stlfsi}")
 
     print("\n[백워데이션 추적]")
     backwardation = calc_backwardation_days(existing, vix_diff)
@@ -150,24 +190,25 @@ def main():
         ).strftime("%Y-%m-%d %H:%M KST"),
         "backwardation": backwardation,
         "indicators": {
-            "VIX":        {"value": vix,       "unit": "",   "source": "Yahoo"},
-            "VIX3M":      {"value": vix3m,     "unit": "",   "source": "Yahoo"},
-            "VIX_DIFF":   {"value": vix_diff,  "unit": "",   "source": "Yahoo"},
-            "SKEW":       {"value": skew,      "unit": "",   "source": "Yahoo"},
-            "OVX":        {"value": ovx,       "unit": "",   "source": "Yahoo"},
-            "GVZ":        {"value": gvz,       "unit": "",   "source": "Yahoo"},
-            "PCR":        {"value": pcr,       "unit": "",   "source": "Yahoo"},
-            "HY_SPREAD":  {"value": hy_spread, "unit": "%",  "source": "FRED"},
-            "IG_SPREAD":  {"value": ig_spread, "unit": "%",  "source": "FRED"},
-            "TED_SPREAD": {"value": ted,       "unit": "bp", "source": "FRED"},
-            "SOFR":       {"value": sofr,      "unit": "%",  "source": "FRED"},
+            "VIX":       make_ind(vix,      "",   "Yahoo", vix_p),
+            "VIX3M":     make_ind(vix3m,    "",   "Yahoo", vix3m_p),
+            "VIX_DIFF":  make_ind(vix_diff, "",   "Yahoo", vix_diff_p),
+            "SKEW":      make_ind(skew,     "",   "Yahoo", skew_p),
+            "OVX":       make_ind(ovx,      "",   "Yahoo", ovx_p),
+            "GVZ":       make_ind(gvz,      "",   "Yahoo", gvz_p),
+            "PCR":       make_ind(pcr,      "",   "Yahoo", pcr_p),
+            "DXY":       make_ind(dxy,      "",   "Yahoo", dxy_p),
+            "HY_SPREAD": make_ind(hy,       "%",  "FRED",  hy_p),
+            "IG_SPREAD": make_ind(ig,       "%",  "FRED",  ig_p),
+            "TED_SPREAD":make_ind(ted,      "bp", "FRED",  ted_p),
+            "SOFR":      make_ind(sofr,     "%",  "FRED",  sofr_p),
+            "T10Y2Y":    make_ind(t10y2y,   "%",  "FRED",  t10y2y_p),
+            "STLFSI":    make_ind(stlfsi,   "",   "FRED",  stlfsi_p),
         },
     }
 
-    # 경로 수정: market-dashboard 폴더 안에 확실하게 저장
-    with open("market-dashboard/data.json", "w", encoding="utf-8") as f:
+    with open("data.json", "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
-
     print(f"\n✅ data.json 저장 완료")
 
 
