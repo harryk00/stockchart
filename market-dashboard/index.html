@@ -5,21 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>금융시장 변동성 모니터</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
-    --bg:      #07090f;
-    --bg2:     #0d1117;
-    --bg3:     #12181f;
-    --border:  #1e2a36;
-    --text:    #c9d1d9;
-    --muted:   #4a5568;
-    --mono:    'Space Mono', monospace;
-    --sans:    'Noto Sans KR', sans-serif;
-    --safe:    #00e676;
-    --warn:    #ffb300;
-    --danger:  #ff1744;
+    --bg:       #0b0f1a;
+    --bg2:      #111827;
+    --bg3:      #1a2236;
+    --glass:    rgba(255,255,255,.04);
+    --border:   rgba(255,255,255,.08);
+    --border2:  rgba(255,255,255,.13);
+    --text:     #e2e8f0;
+    --muted:    #64748b;
+    --muted2:   #94a3b8;
+    --mono:     'DM Mono', monospace;
+    --sans:     'Noto Sans KR', sans-serif;
+    --gold:     #f59e0b;
+    --gold2:    #fbbf24;
+    --safe:     #10b981;
+    --safe2:    #34d399;
+    --warn:     #f59e0b;
+    --danger:   #ef4444;
+    --danger2:  #f87171;
+    --unknown:  #475569;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -28,235 +36,366 @@
     color: var(--text);
     font-family: var(--sans);
     min-height: 100vh;
-    padding-bottom: 60px;
+    padding-bottom: 80px;
+    overflow-x: hidden;
   }
 
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
+  /* ── 배경 그라디언트 오브 ── */
+  .bg-orbs {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: .12;
+  }
+  .orb-1 { width: 600px; height: 600px; background: #3b82f6; top: -200px; left: -150px; }
+  .orb-2 { width: 500px; height: 500px; background: #f59e0b; top: 30%; right: -180px; }
+  .orb-3 { width: 400px; height: 400px; background: #8b5cf6; bottom: -100px; left: 30%; }
+
+  /* ── 격자 오버레이 ── */
+  .bg-grid {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
     background-image:
-      linear-gradient(rgba(30,42,54,.4) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(30,42,54,.4) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none; z-index: 0;
+      linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    background-size: 48px 48px;
   }
 
-  .wrap { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .wrap { position: relative; z-index: 1; max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
   /* ── 헤더 ── */
   header {
-    padding: 28px 0 24px;
+    padding: 32px 0 28px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 36px;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+    margin-bottom: 40px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
   }
-  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 16px; }
   .brand-icon {
-    width: 44px; height: 44px; border-radius: 10px;
-    background: linear-gradient(135deg, #00e676, #1de9b6);
-    display: flex; align-items: center; justify-content: center; font-size: 22px;
+    width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 8px 24px rgba(245,158,11,.3);
   }
-  h1 { font-family: var(--mono); font-size: 1.2rem; color: #e6edf3; letter-spacing: .04em; }
-  h1 span { color: var(--safe); }
-  .subtitle { font-size: .73rem; color: var(--muted); margin-top: 3px; }
-  .meta { font-family: var(--mono); font-size: .7rem; color: var(--muted); text-align: right; }
-  .meta .time { color: var(--safe); margin-top: 4px; font-size: .75rem; }
+  .brand-text h1 {
+    font-family: var(--mono); font-size: 1.15rem; font-weight: 500;
+    color: #f8fafc; letter-spacing: .06em;
+  }
+  .brand-text h1 em { font-style: normal; color: var(--gold); }
+  .brand-text .sub {
+    font-size: .72rem; color: var(--muted2); margin-top: 3px; letter-spacing: .04em;
+  }
+
+  .header-right { text-align: right; }
+  .source-tag {
+    display: inline-flex; gap: 6px; margin-bottom: 6px;
+  }
+  .tag {
+    font-family: var(--mono); font-size: .6rem; padding: 2px 8px; border-radius: 99px;
+    border: 1px solid var(--border2); color: var(--muted2); letter-spacing: .05em;
+  }
+  .update-time {
+    font-family: var(--mono); font-size: .72rem;
+    color: var(--gold); letter-spacing: .03em;
+  }
 
   /* ── 종합 스트레스 패널 ── */
   .stress-panel {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 14px; padding: 28px 32px;
-    margin-bottom: 36px;
-    display: flex; align-items: center; gap: 40px; flex-wrap: wrap;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    padding: 32px 36px;
+    margin-bottom: 40px;
+    display: flex; align-items: center; gap: 48px; flex-wrap: wrap;
+    position: relative; overflow: hidden;
+    box-shadow: 0 4px 40px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.08);
   }
-  .stress-score-wrap { text-align: center; min-width: 120px; }
-  .stress-score {
-    font-family: var(--mono); font-size: 3.8rem; font-weight: 700;
-    line-height: 1; transition: color .5s;
+  .stress-panel::before {
+    content: 'STRESS INDEX';
+    position: absolute; right: 32px; top: 28px;
+    font-family: var(--mono); font-size: .6rem; letter-spacing: .2em;
+    color: rgba(255,255,255,.08); font-weight: 500;
   }
-  .stress-max { font-size: .8rem; color: var(--muted); margin-top: 4px; }
-  .stress-label { font-size: 1rem; font-weight: 600; margin-top: 8px; }
 
-  .stress-bar-wrap { flex: 1; min-width: 260px; }
-  .stress-bar-title { font-family: var(--mono); font-size: .7rem; color: var(--muted); margin-bottom: 12px; letter-spacing: .1em; }
-  .stress-track-outer { position: relative; }
+  .stress-score-wrap { text-align: center; min-width: 130px; }
+  .stress-score {
+    font-family: var(--mono); font-size: 4.5rem; font-weight: 500;
+    line-height: 1; transition: color .6s;
+    text-shadow: 0 0 40px currentColor;
+  }
+  .stress-pts { font-size: .72rem; color: var(--muted); margin-top: 6px; font-family: var(--mono); }
+  .stress-label {
+    font-size: .95rem; font-weight: 600; margin-top: 10px;
+    letter-spacing: .02em;
+  }
+
+  .stress-bar-wrap { flex: 1; min-width: 280px; }
+  .stress-bar-title {
+    font-family: var(--mono); font-size: .65rem; color: var(--muted);
+    margin-bottom: 14px; letter-spacing: .12em; text-transform: uppercase;
+  }
+  .stress-track-outer { position: relative; margin-bottom: 10px; }
   .stress-track {
-    height: 12px; border-radius: 99px;
+    height: 8px; border-radius: 99px;
     background: linear-gradient(90deg, var(--safe) 0%, var(--warn) 50%, var(--danger) 100%);
-    opacity: .2;
+    opacity: .15;
   }
   .stress-fill {
-    height: 12px; border-radius: 99px; position: absolute; top: 0; left: 0;
+    height: 8px; border-radius: 99px; position: absolute; top: 0; left: 0;
     background: linear-gradient(90deg, var(--safe) 0%, var(--warn) 50%, var(--danger) 100%);
-    transition: width 1.2s cubic-bezier(.4,0,.2,1);
-    width: 0%;
+    transition: width 1.4s cubic-bezier(.4,0,.2,1);
+    width: 0%; box-shadow: 0 0 12px rgba(245,158,11,.4);
   }
   .stress-thumb {
-    width: 22px; height: 22px; border-radius: 50%;
+    width: 20px; height: 20px; border-radius: 50%;
     background: #fff; border: 3px solid var(--bg);
-    box-shadow: 0 0 12px rgba(255,255,255,.25);
-    position: absolute; top: -5px; transform: translateX(-50%);
-    transition: left 1.2s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 0 16px rgba(255,255,255,.4);
+    position: absolute; top: -6px; transform: translateX(-50%);
+    transition: left 1.4s cubic-bezier(.4,0,.2,1);
   }
   .stress-ticks {
     display: flex; justify-content: space-between;
-    margin-top: 8px; font-family: var(--mono); font-size: .62rem; color: var(--muted);
+    font-family: var(--mono); font-size: .6rem; color: var(--muted);
   }
 
   /* ── 섹션 타이틀 ── */
   .sec-title {
-    font-family: var(--mono); font-size: .68rem; letter-spacing: .15em;
-    color: var(--muted); text-transform: uppercase;
-    margin-bottom: 18px; padding-bottom: 10px;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px; padding-bottom: 12px;
     border-bottom: 1px solid var(--border);
   }
-  .sec-title::before { content: '// '; color: var(--safe); }
+  .sec-title-line {
+    width: 3px; height: 16px; border-radius: 2px;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    flex-shrink: 0;
+  }
+  .sec-title-text {
+    font-family: var(--mono); font-size: .65rem; letter-spacing: .18em;
+    color: var(--muted2); text-transform: uppercase;
+  }
 
   /* ── 카드 그리드 ── */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px; margin-bottom: 36px;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 16px; margin-bottom: 40px;
   }
 
   /* ── 지표 카드 ── */
   .card {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 12px; padding: 20px 22px;
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 22px 24px;
     position: relative; overflow: hidden;
-    transition: transform .15s, border-color .2s;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+    box-shadow: 0 2px 20px rgba(0,0,0,.2);
   }
-  .card:hover { transform: translateY(-2px); border-color: #2a3a4a; }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border2);
+    box-shadow: 0 8px 32px rgba(0,0,0,.3);
+  }
+
+  /* 상태별 상단 광선 */
+  .card::after {
+    content: ''; position: absolute;
+    top: 0; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--c, transparent), transparent);
+    opacity: .8;
+  }
+  /* 배경 글로우 */
   .card::before {
-    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-    width: 3px; border-radius: 12px 0 0 12px;
-    background: var(--c, var(--muted));
+    content: ''; position: absolute;
+    top: -60px; right: -60px; width: 160px; height: 160px; border-radius: 50%;
+    background: radial-gradient(circle, var(--c, transparent), transparent 70%);
+    opacity: .08; pointer-events: none;
   }
-  .card.safe   { --c: var(--safe);   background: linear-gradient(135deg, rgba(0,230,118,.06) 0%, var(--bg2) 55%); }
-  .card.warn   { --c: var(--warn);   background: linear-gradient(135deg, rgba(255,179,0,.06) 0%, var(--bg2) 55%); }
-  .card.danger { --c: var(--danger); background: linear-gradient(135deg, rgba(255,23,68,.07) 0%, var(--bg2) 55%); }
 
-  .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
-  .card-name { font-family: var(--mono); font-size: .85rem; font-weight: 700; color: #e6edf3; letter-spacing: .05em; }
+  .card.safe   { --c: var(--safe);   border-color: rgba(16,185,129,.2); }
+  .card.warn   { --c: var(--warn);   border-color: rgba(245,158,11,.2); }
+  .card.danger { --c: var(--danger); border-color: rgba(239,68,68,.25); }
+  .card.safe::after   { background: linear-gradient(90deg, transparent, rgba(16,185,129,.6), transparent); }
+  .card.warn::after   { background: linear-gradient(90deg, transparent, rgba(245,158,11,.6), transparent); }
+  .card.danger::after { background: linear-gradient(90deg, transparent, rgba(239,68,68,.6), transparent); }
+
+  .card-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 4px;
+  }
+  .card-name {
+    font-family: var(--mono); font-size: .82rem; font-weight: 500;
+    color: #f1f5f9; letter-spacing: .06em;
+  }
   .card-src {
-    font-family: var(--mono); font-size: .62rem; color: var(--muted);
-    background: var(--bg3); border: 1px solid var(--border);
-    padding: 2px 7px; border-radius: 4px;
+    font-family: var(--mono); font-size: .58rem; color: var(--muted);
+    background: rgba(255,255,255,.06); border: 1px solid var(--border);
+    padding: 2px 8px; border-radius: 99px;
   }
-  .card-label { font-size: .72rem; color: var(--muted); margin-bottom: 14px; }
+  .card-label { font-size: .7rem; color: var(--muted2); margin-bottom: 16px; }
 
-  .card-body { display: flex; align-items: center; gap: 18px; }
+  .card-body { display: flex; align-items: center; gap: 20px; }
   .gauge-wrap { position: relative; width: 90px; height: 54px; flex-shrink: 0; }
   .gauge-wrap canvas { width: 90px !important; height: 90px !important; margin-top: -36px; }
   .gauge-val {
     position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%);
-    font-family: var(--mono); font-size: .75rem; font-weight: 700;
+    font-family: var(--mono); font-size: .72rem; font-weight: 500;
     color: var(--c, var(--muted)); white-space: nowrap;
+    text-shadow: 0 0 10px currentColor;
   }
 
   .card-right { flex: 1; }
   .card-big-val {
-    font-family: var(--mono); font-size: 2rem; font-weight: 700;
+    font-family: var(--mono); font-size: 2.1rem; font-weight: 500;
     color: var(--c, var(--muted)); line-height: 1; margin-bottom: 2px;
+    text-shadow: 0 0 20px currentColor;
   }
-  .card-unit { font-size: .68rem; color: var(--muted); font-family: var(--mono); }
+  .card-unit { font-size: .65rem; color: var(--muted); font-family: var(--mono); margin-bottom: 10px; }
 
-  .thresh { margin-top: 10px; display: flex; flex-direction: column; gap: 3px; }
-  .thresh-row { display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: .63rem; }
-  .thresh-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .thresh-dot.s { background: var(--safe); }
-  .thresh-dot.w { background: var(--warn); }
-  .thresh-dot.d { background: var(--danger); }
-  .thresh-text { color: var(--muted); }
-  .thresh-text.on { color: var(--text); font-weight: 700; }
+  .thresh { display: flex; flex-direction: column; gap: 4px; }
+  .thresh-row { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .61rem; }
+  .thresh-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .thresh-dot.s { background: var(--safe); box-shadow: 0 0 4px var(--safe); }
+  .thresh-dot.w { background: var(--warn); box-shadow: 0 0 4px var(--warn); }
+  .thresh-dot.d { background: var(--danger); box-shadow: 0 0 4px var(--danger); }
+  .thresh-text { color: var(--muted); transition: color .2s; }
+  .thresh-text.on { color: var(--text); font-weight: 500; }
 
   .badge {
     display: inline-flex; align-items: center; gap: 5px;
-    font-family: var(--mono); font-size: .64rem; font-weight: 700;
-    padding: 3px 9px; border-radius: 20px; margin-top: 10px; letter-spacing: .06em;
+    font-family: var(--mono); font-size: .61rem; font-weight: 500;
+    padding: 4px 10px; border-radius: 99px; margin-top: 12px; letter-spacing: .07em;
   }
-  .badge::before { content: '●'; font-size: .45rem; }
-  .badge.safe   { background: rgba(0,230,118,.1);  color: var(--safe);   border: 1px solid rgba(0,230,118,.2); }
-  .badge.warn   { background: rgba(255,179,0,.1);  color: var(--warn);   border: 1px solid rgba(255,179,0,.2); }
-  .badge.danger { background: rgba(255,23,68,.1);  color: var(--danger); border: 1px solid rgba(255,23,68,.2); animation: blink .8s step-end infinite; }
-  .badge.unknown{ background: rgba(74,85,104,.1);  color: var(--muted);  border: 1px solid rgba(74,85,104,.2); }
+  .badge::before { content: '●'; font-size: .4rem; }
+  .badge.safe   { background: rgba(16,185,129,.12);  color: var(--safe2);  border: 1px solid rgba(16,185,129,.25); }
+  .badge.warn   { background: rgba(245,158,11,.12);  color: var(--gold2);  border: 1px solid rgba(245,158,11,.25); }
+  .badge.danger { background: rgba(239,68,68,.12);   color: var(--danger2);border: 1px solid rgba(239,68,68,.25); animation: blink .9s step-end infinite; }
+  .badge.unknown{ background: rgba(71,85,105,.12);   color: var(--muted2); border: 1px solid rgba(71,85,105,.2); }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
+  /* ── 주석 박스 ── */
   .note {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-left: 3px solid var(--warn);
-    border-radius: 0 8px 8px 0; padding: 13px 18px;
-    font-size: .75rem; color: var(--muted); line-height: 1.6; margin-bottom: 12px;
+    background: var(--glass); backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-left: 3px solid rgba(245,158,11,.5);
+    border-radius: 0 10px 10px 0; padding: 14px 20px;
+    font-size: .73rem; color: var(--muted2); line-height: 1.65; margin-bottom: 12px;
   }
-  .note b { color: var(--warn); font-family: var(--mono); font-size: .68rem; }
+  .note b { color: var(--gold); font-family: var(--mono); font-size: .66rem; }
 
+  /* ── 푸터 ── */
   footer {
-    border-top: 1px solid var(--border); padding-top: 20px; margin-top: 24px;
-    font-family: var(--mono); font-size: .67rem; color: var(--muted);
-    text-align: center; line-height: 2;
+    border-top: 1px solid var(--border); padding-top: 24px; margin-top: 24px;
+    font-family: var(--mono); font-size: .65rem; color: var(--muted);
+    text-align: center; line-height: 2.2;
   }
+  footer a { color: var(--gold); text-decoration: none; }
 
-  @media(max-width:600px){
-    .grid { grid-template-columns: 1fr; }
-    .stress-panel { flex-direction: column; gap: 20px; }
+  /* ── 페이드인 애니메이션 ── */
+  .card { animation: fadeUp .5s ease both; }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(12px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  .grid .card:nth-child(1){animation-delay:.05s}
+  .grid .card:nth-child(2){animation-delay:.1s}
+  .grid .card:nth-child(3){animation-delay:.15s}
+  .grid .card:nth-child(4){animation-delay:.2s}
+  .grid .card:nth-child(5){animation-delay:.25s}
+
+  @media(max-width:640px){
+    .grid{grid-template-columns:1fr;}
+    .stress-panel{flex-direction:column;gap:24px;padding:24px;}
   }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="bg-grid"></div>
 
+<div class="wrap">
   <header>
     <div class="brand">
       <div class="brand-icon">📡</div>
-      <div>
-        <h1>MARKET<span>.</span>MONITOR</h1>
-        <div class="subtitle">금융시장 변동성 실시간 대시보드</div>
+      <div class="brand-text">
+        <h1>MARKET<em>.</em>MONITOR</h1>
+        <div class="sub">금융시장 변동성 실시간 대시보드</div>
       </div>
     </div>
-    <div class="meta">
-      <div>FRED · YAHOO FINANCE</div>
-      <div class="time" id="upd">로딩 중...</div>
+    <div class="header-right">
+      <div class="source-tag">
+        <span class="tag">FRED</span>
+        <span class="tag">YAHOO FINANCE</span>
+        <span class="tag">CBOE</span>
+      </div>
+      <div class="update-time" id="upd">로딩 중...</div>
     </div>
   </header>
 
-  <div class="sec-title">종합 시장 스트레스 지수(임의추정치라서 참고만..)</div>
+  <!-- 종합 스트레스 -->
+  <div class="sec-title">
+    <div class="sec-title-line"></div>
+    <div class="sec-title-text">종합 시장 스트레스 지수</div>
+  </div>
   <div class="stress-panel">
     <div class="stress-score-wrap">
       <div class="stress-score" id="s-score">—</div>
-      <div class="stress-max">/ 100 pts</div>
+      <div class="stress-pts">/ 100 pts</div>
       <div class="stress-label" id="s-label">계산 중</div>
     </div>
     <div class="stress-bar-wrap">
-      <div class="stress-bar-title">STRESS LEVEL</div>
+      <div class="stress-bar-title">실시간 스트레스 레벨</div>
       <div class="stress-track-outer">
         <div class="stress-track"></div>
         <div class="stress-fill" id="s-fill"></div>
         <div class="stress-thumb" id="s-thumb" style="left:0%"></div>
       </div>
       <div class="stress-ticks">
-        <span>0 정상</span><span>25</span><span>50 경계</span><span>75</span><span>100 위기</span>
+        <span>0 — 정상</span><span>25</span><span>50 — 경계</span><span>75</span><span>100 — 위기</span>
       </div>
     </div>
   </div>
 
-  <div class="sec-title">변동성 지표</div>
+  <!-- 변동성 -->
+  <div class="sec-title">
+    <div class="sec-title-line"></div>
+    <div class="sec-title-text">변동성 지표</div>
+  </div>
   <div class="grid" id="g-vol"></div>
 
-  <div class="sec-title">신용 스프레드</div>
+  <!-- 신용 -->
+  <div class="sec-title">
+    <div class="sec-title-line"></div>
+    <div class="sec-title-text">신용 스프레드</div>
+  </div>
   <div class="grid" id="g-spread"></div>
 
-  <div class="sec-title">단기 자금시장</div>
+  <!-- 단기 자금 -->
+  <div class="sec-title">
+    <div class="sec-title-line"></div>
+    <div class="sec-title-text">단기 자금시장</div>
+  </div>
   <div class="grid" id="g-money"></div>
 
-  <div class="sec-title">VIX 기간구조 (단기 패닉 신호)</div>
+  <!-- VIX 기간구조 -->
+  <div class="sec-title">
+    <div class="sec-title-line"></div>
+    <div class="sec-title-text">VIX 기간구조 — 단기 패닉 신호</div>
+  </div>
   <div id="bw-banner"></div>
   <div class="grid" id="g-vixterm"></div>
 
   <div class="note"><b>⚠ MOVE INDEX / FRA-OIS</b><br>ICE 전용 유료 데이터로 무료 API 미제공. SOFR로 대체 모니터링.</div>
-  <div class="note"><b>🕐 업데이트 주기</b><br>평일 KST 07:00 · 15:00 · 23:00 자동 갱신. FRED는 T+1일 지연.</div>
+  <div class="note"><b>🕐 업데이트 주기</b><br>평일 KST 07:00 · 15:00 · 23:00 자동 갱신. FRED 데이터는 T+1일 지연 공표.</div>
 
   <footer>
-    데이터: FRED (St. Louis Fed) · Yahoo Finance · CBOE<br>
+    데이터 출처: <a href="https://fred.stlouisfed.org">FRED (St. Louis Fed)</a> · Yahoo Finance · CBOE<br>
     본 대시보드는 정보 제공 목적이며 투자 권유가 아닙니다.<br>
     Built with GitHub Pages + GitHub Actions — 완전 무료
   </footer>
@@ -267,7 +406,7 @@ const DEF = {
   VIX: {
     name:"VIX", label:"CBOE 변동성 지수", source:"Yahoo", unit:"", gaugeMax:80,
     thresholds:[
-      {l:"safe",   dot:"s", text:"< 20  →  정상",    min:0,  max:20 },
+      {l:"safe",   dot:"s", text:"< 20  →  정상",     min:0,  max:20 },
       {l:"warn",   dot:"w", text:"20~30 →  긴장 시작", min:20, max:30 },
       {l:"danger", dot:"d", text:"30+   →  위험 구간", min:30, max:999},
     ],
@@ -276,18 +415,18 @@ const DEF = {
   SKEW: {
     name:"SKEW", label:"CBOE SKEW 지수", source:"Yahoo", unit:"", gaugeMax:170,
     thresholds:[
-      {l:"safe",   dot:"s", text:"< 130  →  정상",              min:0,   max:130},
-      {l:"warn",   dot:"w", text:"130~140 →  하방 tail 확대",    min:130, max:140},
-      {l:"danger", dot:"d", text:"140+   →  극단적 하락 프라이싱", min:140, max:999},
+      {l:"safe",   dot:"s", text:"< 130  →  정상",               min:0,   max:130},
+      {l:"warn",   dot:"w", text:"130~140 →  하방 tail 확대",     min:130, max:140},
+      {l:"danger", dot:"d", text:"140+    →  극단적 하락 프라이싱", min:140, max:999},
     ],
     score: v => v<130?0:v<140?(v-130)/10*40:Math.min(40+(v-140)*2,100),
   },
   OVX: {
     name:"OVX", label:"원유 변동성 지수", source:"Yahoo", unit:"", gaugeMax:120,
     thresholds:[
-      {l:"safe",   dot:"s", text:"< 40  →  정상",     min:0,  max:40 },
-      {l:"warn",   dot:"w", text:"40~60 →  경계",     min:40, max:60 },
-      {l:"danger", dot:"d", text:"60+   →  고변동성",  min:60, max:999},
+      {l:"safe",   dot:"s", text:"< 40  →  정상",    min:0,  max:40 },
+      {l:"warn",   dot:"w", text:"40~60 →  경계",    min:40, max:60 },
+      {l:"danger", dot:"d", text:"60+   →  고변동성", min:60, max:999},
     ],
     score: v => v<40?0:v<60?(v-40)/20*30:Math.min(30+(v-60)*1.5,70),
   },
@@ -303,10 +442,10 @@ const DEF = {
   PCR: {
     name:"PCR", label:"Put / Call Ratio", source:"Yahoo", unit:"", gaugeMax:2,
     thresholds:[
-      {l:"warn",   dot:"w", text:"< 0.6   →  과열 경고",            min:0,   max:0.6},
-      {l:"safe",   dot:"s", text:"0.6~1.1 →  정상 범위",             min:0.6, max:1.1},
+      {l:"warn",   dot:"w", text:"< 0.6   →  과열 경고",             min:0,   max:0.6},
+      {l:"safe",   dot:"s", text:"0.6~1.1 →  정상 범위",              min:0.6, max:1.1},
       {l:"warn",   dot:"w", text:"1.1~1.3 →  극단적 공포 (단기 바닥)", min:1.1, max:1.3},
-      {l:"danger", dot:"d", text:"1.3+    →  패닉",                  min:1.3, max:999},
+      {l:"danger", dot:"d", text:"1.3+    →  패닉",                   min:1.3, max:999},
     ],
     score: v => v<0.6?(0.6-v)/0.6*40:v<=1.1?0:v<1.3?(v-1.1)/0.2*40:Math.min(40+(v-1.3)*50,100),
   },
@@ -322,7 +461,7 @@ const DEF = {
   IG_SPREAD: {
     name:"IG SPREAD", label:"투자등급 회사채 스프레드", source:"FRED", unit:"%", gaugeMax:5,
     thresholds:[
-      {l:"safe",   dot:"s", text:"< 1.5%   →  정상",       min:0,   max:1.5},
+      {l:"safe",   dot:"s", text:"< 1.5%   →  정상",      min:0,   max:1.5},
       {l:"warn",   dot:"w", text:"1.5~2.5% →  리스크오프", min:1.5, max:2.5},
       {l:"danger", dot:"d", text:"2.5%+    →  위험",       min:2.5, max:999},
     ],
@@ -331,9 +470,9 @@ const DEF = {
   TED_SPREAD: {
     name:"TED SPREAD", label:"TED 스프레드", source:"FRED", unit:"bp", gaugeMax:3,
     thresholds:[
-      {l:"safe",   dot:"s", text:"< 0.5  →  정상",          min:0,   max:0.5},
-      {l:"warn",   dot:"w", text:"0.5~1  →  스트레스 징후",  min:0.5, max:1  },
-      {l:"danger", dot:"d", text:"1+     →  시스템 위기",    min:1,   max:999},
+      {l:"safe",   dot:"s", text:"< 0.5  →  정상",         min:0,   max:0.5},
+      {l:"warn",   dot:"w", text:"0.5~1  →  스트레스 징후", min:0.5, max:1  },
+      {l:"danger", dot:"d", text:"1+     →  시스템 위기",   min:1,   max:999},
     ],
     score: v => v<0.5?0:v<1?(v-0.5)/0.5*50:Math.min(50+(v-1)*30,100),
   },
@@ -348,12 +487,11 @@ const DEF = {
     score: ()=>0,
   },
   VIX_DIFF: {
-    name:"VIX 기간구조", label:"1개월 VIX − 3개월 VIX", source:"Yahoo", unit:"",
-    gaugeMax:15,
+    name:"VIX 기간구조", label:"1개월 VIX − 3개월 VIX", source:"Yahoo", unit:"", gaugeMax:15,
     thresholds:[
-      {l:"safe",   dot:"s", text:"음수 (콘탱고)        →  정상",              min:-999, max:0  },
-      {l:"warn",   dot:"w", text:"양수 (백워데이션 시작) →  주의",             min:0,    max:3  },
-      {l:"danger", dot:"d", text:"3+  (강한 백워데이션)  →  단기 패닉 신호",   min:3,    max:999},
+      {l:"safe",   dot:"s", text:"음수 (콘탱고)        →  정상",            min:-999, max:0  },
+      {l:"warn",   dot:"w", text:"양수 (백워데이션 시작) →  주의",           min:0,    max:3  },
+      {l:"danger", dot:"d", text:"3+  (강한 백워데이션)  →  단기 패닉 신호", min:3,    max:999},
     ],
     score: v => v<0?0:v<3?v/3*40:Math.min(40+(v-3)*15,100),
   },
@@ -371,18 +509,18 @@ function getActive(key, v) {
   for (const t of d.thresholds) if (v>=t.min && v<t.max) return t.text;
   return d.thresholds[d.thresholds.length-1].text;
 }
-const COLOR = { safe:"#00e676", warn:"#ffb300", danger:"#ff1744", unknown:"#4a5568" };
+const COLOR = { safe:"#10b981", warn:"#f59e0b", danger:"#ef4444", unknown:"#475569" };
 const LABEL = { safe:"정상", warn:"경계", danger:"위험", unknown:"데이터 없음" };
 
 function makeGauge(id, value, max, level) {
   const ctx = document.getElementById(id);
   if (!ctx) return;
-  const pct = value==null ? 0 : Math.min(value/max, 1);
+  const pct = value==null ? 0 : Math.min(Math.max(value,0)/max, 1);
   const color = COLOR[level] || COLOR.unknown;
   new Chart(ctx, {
     type:"doughnut",
-    data:{ datasets:[{ data:[pct,1-pct], backgroundColor:[color,"#1e2a36"], borderWidth:0, circumference:180, rotation:270 }] },
-    options:{ responsive:false, cutout:"70%", plugins:{legend:{display:false},tooltip:{enabled:false}}, animation:{duration:1000,easing:"easeOutQuart"} }
+    data:{ datasets:[{ data:[pct,1-pct], backgroundColor:[color,"rgba(255,255,255,.06)"], borderWidth:0, circumference:180, rotation:270 }] },
+    options:{ responsive:false, cutout:"72%", plugins:{legend:{display:false},tooltip:{enabled:false}}, animation:{duration:1000,easing:"easeOutQuart"} }
   });
 }
 
@@ -425,14 +563,8 @@ function renderCard(key, data, idx) {
 
 function calcStress(ind) {
   const W = {
-    HY_SPREAD: .22,
-    VIX:       .20,
-    IG_SPREAD: .13,
-    TED_SPREAD:.10,
-    VIX_DIFF:  .10,
-    SKEW:      .10,
-    OVX:       .08,
-    GVZ:       .07,
+    HY_SPREAD:.22, VIX:.20, IG_SPREAD:.13,
+    TED_SPREAD:.10, VIX_DIFF:.10, SKEW:.10, OVX:.08, GVZ:.07,
   };
   let total=0, ws=0;
   for (const [k,w] of Object.entries(W)) {
@@ -445,70 +577,65 @@ function calcStress(ind) {
 function renderBackwardationBanner(bw) {
   const el = document.getElementById("bw-banner");
   if (!el) return;
-  if (!bw) { el.innerHTML = ""; return; }
+  if (!bw) { el.innerHTML=""; return; }
 
-  const days = bw.consecutive_days || 0;
-  const status = bw.status || "normal";
+  const days = bw.consecutive_days||0;
+  const status = bw.status||"normal";
   const isBackward = bw.is_backwardation;
 
-  // 콘탱고(정상)면 배너 숨김
-  if (!isBackward && days === 0) { el.innerHTML = ""; return; }
+  if (!isBackward && days===0) { el.innerHTML=""; return; }
 
-  let color, icon, title, desc, borderColor;
-  if (status === "crisis") {
-    color = "rgba(255,23,68,.12)"; borderColor = "var(--danger)";
-    icon = "🚨"; title = `백워데이션 ${days}거래일 연속 — 매우 심각한 위기`;
-    desc = "1주일 이상 백워데이션 지속. 시장이 극단적 단기 패닉 상태입니다.";
-  } else if (status === "danger") {
-    color = "rgba(255,23,68,.08)"; borderColor = "var(--danger)";
-    icon = "⚠️"; title = `백워데이션 ${days}거래일 연속 — 위험`;
-    desc = "5거래일 이상 지속. 전문가들은 이를 시장 패닉 진입 신호로 봅니다.";
-  } else if (status === "warn") {
-    color = "rgba(255,179,0,.08)"; borderColor = "var(--warn)";
-    icon = "🔶"; title = `백워데이션 ${days}거래일 연속 — 주의`;
-    desc = "1개월물 VIX가 3개월물보다 높음. 5거래일 지속 시 위험 구간 진입.";
+  let color, borderColor, icon, title, desc;
+  if (status==="crisis") {
+    color="rgba(239,68,68,.1)"; borderColor="var(--danger)";
+    icon="🚨"; title=`백워데이션 ${days}거래일 연속 — 매우 심각한 위기`;
+    desc="1주일 이상 백워데이션 지속. 시장이 극단적 단기 패닉 상태입니다.";
+  } else if (status==="danger") {
+    color="rgba(239,68,68,.07)"; borderColor="var(--danger)";
+    icon="⚠️"; title=`백워데이션 ${days}거래일 연속 — 위험`;
+    desc="5거래일 이상 지속. 전문가들은 이를 시장 패닉 진입 신호로 봅니다.";
+  } else if (status==="warn") {
+    color="rgba(245,158,11,.07)"; borderColor="var(--warn)";
+    icon="🔶"; title=`백워데이션 ${days}거래일 연속 — 주의`;
+    desc="1개월물 VIX가 3개월물보다 높음. 5거래일 지속 시 위험 구간 진입.";
   } else {
-    color = "rgba(0,230,118,.06)"; borderColor = "var(--safe)";
-    icon = "✅"; title = "콘탱고 (정상)";
-    desc = "3개월물 VIX > 1개월물 VIX. 기간구조 정상 상태.";
+    color="rgba(16,185,129,.06)"; borderColor="var(--safe)";
+    icon="✅"; title="콘탱고 (정상)";
+    desc="3개월물 VIX > 1개월물 VIX. 기간구조 정상 상태.";
   }
 
-  // 히스토리 바 (최근 10일)
-  const hist = (bw.history || []).slice(-10);
-  const histHtml = hist.map(h => {
-    const c = h.backwardation ? (days>=7?"var(--danger)":days>=5?"var(--danger)":"var(--warn)") : "var(--safe)";
+  const hist = (bw.history||[]).slice(-10);
+  const histHtml = hist.map(h=>{
+    const c = h.backwardation?(days>=5?"var(--danger)":"var(--warn)"):"var(--safe)";
     return `<div title="${h.date}: ${h.diff>0?'+':''}${h.diff}" style="
-      width:18px;height:28px;border-radius:3px;background:${c};opacity:.85;
-      display:flex;align-items:flex-end;justify-content:center;font-size:.5rem;color:#fff;padding-bottom:2px;
+      width:20px;height:32px;border-radius:4px;background:${c};opacity:.8;
+      display:flex;align-items:center;justify-content:center;font-size:.55rem;color:#fff;
     ">${h.backwardation?'▲':'▼'}</div>`;
   }).join("");
 
-  el.innerHTML = `
+  el.innerHTML=`
     <div style="
-      background:${color};border:1px solid ${borderColor};border-left:4px solid ${borderColor};
-      border-radius:0 10px 10px 0;padding:18px 22px;margin-bottom:16px;
+      background:${color};backdrop-filter:blur(16px);
+      border:1px solid ${borderColor};border-left:4px solid ${borderColor};
+      border-radius:0 14px 14px 0;padding:20px 26px;margin-bottom:16px;
     ">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;">
         <div>
-          <div style="font-family:var(--mono);font-size:.85rem;font-weight:700;color:#e6edf3;margin-bottom:6px;">
-            ${icon} ${title}
-          </div>
-          <div style="font-size:.75rem;color:var(--muted);line-height:1.5;">${desc}</div>
-          <div style="font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-top:8px;">
-            5~7거래일 → 위험 &nbsp;|&nbsp; 7거래일+ → 매우 심각한 위기
-          </div>
+          <div style="font-family:var(--mono);font-size:.88rem;font-weight:500;color:#f1f5f9;margin-bottom:8px;">${icon} ${title}</div>
+          <div style="font-size:.75rem;color:var(--muted2);line-height:1.6;">${desc}</div>
+          <div style="font-family:var(--mono);font-size:.63rem;color:var(--muted);margin-top:8px;">5~7거래일 → 위험 &nbsp;|&nbsp; 7거래일+ → 매우 심각한 위기</div>
         </div>
-        <div style="text-align:center;">
-          <div style="font-family:var(--mono);font-size:2.8rem;font-weight:700;color:${borderColor};line-height:1;">${days}</div>
-          <div style="font-size:.65rem;color:var(--muted);font-family:var(--mono);">거래일 연속</div>
+        <div style="text-align:center;min-width:80px;">
+          <div style="font-family:var(--mono);font-size:3rem;font-weight:500;color:${borderColor};line-height:1;text-shadow:0 0 20px currentColor;">${days}</div>
+          <div style="font-size:.63rem;color:var(--muted);font-family:var(--mono);">거래일 연속</div>
         </div>
       </div>
-      ${hist.length > 0 ? `
-        <div style="margin-top:14px;">
-          <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);margin-bottom:6px;">최근 ${hist.length}거래일 기간구조</div>
-          <div style="display:flex;gap:4px;align-items:flex-end;">${histHtml}</div>
-          <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-top:4px;">▲ 백워데이션 &nbsp; ▼ 콘탱고</div>
-        </div>` : ""}
+      ${hist.length>0?`
+        <div style="margin-top:16px;">
+          <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);margin-bottom:8px;">최근 ${hist.length}거래일</div>
+          <div style="display:flex;gap:5px;align-items:flex-end;">${histHtml}</div>
+          <div style="font-family:var(--mono);font-size:.57rem;color:var(--muted);margin-top:5px;">▲ 백워데이션 &nbsp; ▼ 콘탱고</div>
+        </div>`:""}
     </div>`;
 }
 
@@ -524,12 +651,11 @@ async function load() {
   const mnKeys=["TED_SPREAD","SOFR"];
   const vtKeys=["VIX3M","VIX_DIFF"];
 
-  document.getElementById("g-vol").innerHTML=volKeys.map((k)=>renderCard(k,ind[k],ALL_KEYS.indexOf(k))).join("");
-  document.getElementById("g-spread").innerHTML=spKeys.map((k)=>renderCard(k,ind[k],ALL_KEYS.indexOf(k))).join("");
-  document.getElementById("g-money").innerHTML=mnKeys.map((k)=>renderCard(k,ind[k],ALL_KEYS.indexOf(k))).join("");
-  document.getElementById("g-vixterm").innerHTML=vtKeys.map((k)=>renderCard(k,ind[k],ALL_KEYS.indexOf(k))).join("");
+  document.getElementById("g-vol").innerHTML=volKeys.map(k=>renderCard(k,ind[k],ALL_KEYS.indexOf(k))).join("");
+  document.getElementById("g-spread").innerHTML=spKeys.map(k=>renderCard(k,ind[k],ALL_KEYS.indexOf(k))).join("");
+  document.getElementById("g-money").innerHTML=mnKeys.map(k=>renderCard(k,ind[k],ALL_KEYS.indexOf(k))).join("");
+  document.getElementById("g-vixterm").innerHTML=vtKeys.map(k=>renderCard(k,ind[k],ALL_KEYS.indexOf(k))).join("");
 
-  // ── 백워데이션 연속일 배너 ──
   renderBackwardationBanner(data.backwardation);
 
   ALL_KEYS.forEach((k,i)=>{
