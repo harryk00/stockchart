@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-04-01 22:27 UTC",
-  "updated_kst": "2026-04-02 07:27 KST",
+  "updated_utc": "2026-04-02 07:01 UTC",
+  "updated_kst": "2026-04-02 16:01 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-04-02",
@@ -90,16 +90,16 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 99.55,
-      "prev": 99.96,
-      "change": -0.41,
+      "value": 100.06,
+      "prev": 99.65,
+      "change": 0.41,
       "unit": "",
       "source": "Yahoo"
     },
     "HY_SPREAD": {
-      "value": 3.28,
+      "value": null,
       "prev": 3.46,
-      "change": -0.18,
+      "change": null,
       "unit": "%",
       "source": "FRED"
     },
