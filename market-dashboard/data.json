@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-04-09 15:13 UTC",
-  "updated_kst": "2026-04-10 00:13 KST",
+  "updated_utc": "2026-04-09 22:32 UTC",
+  "updated_kst": "2026-04-10 07:32 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-04-10",
@@ -69,51 +69,51 @@
       },
       {
         "date": "2026-04-10",
-        "diff": -1.82,
+        "diff": -2.32,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 20.7,
+      "value": 19.49,
       "prev": 21.04,
-      "change": -0.34,
+      "change": -1.55,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 22.52,
+      "value": 21.81,
       "prev": 22.68,
-      "change": -0.16,
+      "change": -0.87,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -1.82,
+      "value": -2.32,
       "prev": -1.64,
-      "change": -0.18,
+      "change": -0.68,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 150.36,
-      "prev": 148.45,
-      "change": 1.91,
+      "value": 143.27,
+      "prev": 150.36,
+      "change": -7.09,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 85.16,
+      "value": 81.74,
       "prev": 83.91,
-      "change": 1.25,
+      "change": -2.17,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 32.3,
+      "value": 31.66,
       "prev": 34.21,
-      "change": -1.91,
+      "change": -2.55,
       "unit": "",
       "source": "Yahoo"
     },
@@ -125,9 +125,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 98.96,
-      "prev": 99.03,
-      "change": -0.07,
+      "value": 98.79,
+      "prev": 99.13,
+      "change": -0.34,
       "unit": "",
       "source": "Yahoo"
     },
@@ -160,9 +160,9 @@
       "source": "FRED"
     },
     "T10Y2Y": {
-      "value": 0.5,
-      "prev": 0.52,
-      "change": -0.02,
+      "value": 0.51,
+      "prev": 0.5,
+      "change": 0.01,
       "unit": "%",
       "source": "FRED"
     },
