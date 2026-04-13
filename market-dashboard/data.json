@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-04-13 15:08 UTC",
-  "updated_kst": "2026-04-14 00:08 KST",
+  "updated_utc": "2026-04-13 22:35 UTC",
+  "updated_kst": "2026-04-14 07:35 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-04-14",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-04-14",
-        "diff": -2.13,
+        "diff": -2.22,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 19.85,
+      "value": 19.12,
       "prev": 19.23,
-      "change": 0.62,
+      "change": -0.11,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 21.98,
+      "value": 21.34,
       "prev": 21.86,
-      "change": 0.12,
+      "change": -0.52,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -2.13,
+      "value": -2.22,
       "prev": -2.63,
-      "change": 0.5,
+      "change": 0.41,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 144.18,
-      "prev": 143.27,
-      "change": 0.91,
+      "value": 156.93,
+      "prev": 144.18,
+      "change": 12.75,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 83.17,
+      "value": 80.55,
       "prev": 78.01,
-      "change": 5.16,
+      "change": 2.54,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 31.03,
+      "value": 30.0,
       "prev": 30.46,
-      "change": 0.57,
+      "change": -0.46,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 98.73,
+      "value": 98.37,
       "prev": 98.65,
-      "change": 0.08,
+      "change": -0.28,
       "unit": "",
       "source": "Yahoo"
     },
@@ -170,9 +170,9 @@
       "source": "FRED"
     },
     "T10Y2Y": {
-      "value": 0.5,
-      "prev": 0.51,
-      "change": -0.01,
+      "value": 0.52,
+      "prev": 0.5,
+      "change": 0.02,
       "unit": "%",
       "source": "FRED"
     },
