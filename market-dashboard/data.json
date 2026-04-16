@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-04-16 15:19 UTC",
-  "updated_kst": "2026-04-17 00:19 KST",
+  "updated_utc": "2026-04-16 22:31 UTC",
+  "updated_kst": "2026-04-17 07:31 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-04-17",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-04-17",
-        "diff": -2.44,
+        "diff": -2.83,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 18.75,
+      "value": 17.94,
       "prev": 18.17,
-      "change": 0.58,
+      "change": -0.23,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 21.19,
+      "value": 20.77,
       "prev": 20.78,
-      "change": 0.41,
+      "change": -0.01,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -2.44,
+      "value": -2.83,
       "prev": -2.61,
-      "change": 0.17,
+      "change": -0.22,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 139.23,
-      "prev": 149.94,
-      "change": -10.71,
+      "value": 140.74,
+      "prev": 139.23,
+      "change": 1.51,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 73.7,
+      "value": 73.04,
       "prev": 72.23,
-      "change": 1.47,
+      "change": 0.81,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 29.26,
+      "value": 28.65,
       "prev": 29.97,
-      "change": -0.71,
+      "change": -1.32,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,16 +135,16 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 98.22,
+      "value": 98.18,
       "prev": 98.06,
-      "change": 0.16,
+      "change": 0.12,
       "unit": "",
       "source": "Yahoo"
     },
     "HY_SPREAD": {
-      "value": 2.85,
-      "prev": 2.84,
-      "change": 0.01,
+      "value": null,
+      "prev": null,
+      "change": null,
       "unit": "%",
       "source": "FRED"
     },
@@ -170,9 +170,9 @@
       "source": "FRED"
     },
     "T10Y2Y": {
-      "value": 0.53,
-      "prev": 0.5,
-      "change": 0.03,
+      "value": 0.54,
+      "prev": 0.53,
+      "change": 0.01,
       "unit": "%",
       "source": "FRED"
     },
