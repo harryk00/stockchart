@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-04-20 15:10 UTC",
-  "updated_kst": "2026-04-21 00:10 KST",
+  "updated_utc": "2026-04-20 22:34 UTC",
+  "updated_kst": "2026-04-21 07:34 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-04-21",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-04-21",
-        "diff": -2.06,
+        "diff": -2.37,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 19.4,
+      "value": 18.87,
       "prev": 17.48,
-      "change": 1.92,
+      "change": 1.39,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 21.46,
+      "value": 21.24,
       "prev": 20.51,
-      "change": 0.95,
+      "change": 0.73,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -2.06,
+      "value": -2.37,
       "prev": -3.03,
-      "change": 0.97,
+      "change": 0.66,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 141.82,
-      "prev": 140.74,
-      "change": 1.08,
+      "value": 141.9,
+      "prev": 141.82,
+      "change": 0.08,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 74.35,
+      "value": 73.79,
       "prev": 69.01,
-      "change": 5.34,
+      "change": 4.78,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 29.51,
+      "value": 28.46,
       "prev": 28.95,
-      "change": 0.56,
+      "change": -0.49,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 98.14,
+      "value": 98.05,
       "prev": 98.1,
-      "change": 0.04,
+      "change": -0.05,
       "unit": "",
       "source": "Yahoo"
     },
@@ -170,9 +170,9 @@
       "source": "FRED"
     },
     "T10Y2Y": {
-      "value": 0.55,
-      "prev": 0.54,
-      "change": 0.01,
+      "value": 0.54,
+      "prev": 0.55,
+      "change": -0.01,
       "unit": "%",
       "source": "FRED"
     },
