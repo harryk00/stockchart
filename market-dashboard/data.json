@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-04-21 22:31 UTC",
-  "updated_kst": "2026-04-22 07:31 KST",
+  "updated_utc": "2026-04-22 07:20 UTC",
+  "updated_kst": "2026-04-22 16:20 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-04-22",
@@ -135,23 +135,23 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 98.41,
-      "prev": 98.05,
-      "change": 0.36,
+      "value": 98.3,
+      "prev": 98.41,
+      "change": -0.11,
       "unit": "",
       "source": "Yahoo"
     },
     "HY_SPREAD": {
-      "value": null,
-      "prev": null,
-      "change": null,
+      "value": 2.87,
+      "prev": 2.83,
+      "change": 0.04,
       "unit": "%",
       "source": "FRED"
     },
     "IG_SPREAD": {
-      "value": null,
+      "value": 0.81,
       "prev": 0.8,
-      "change": null,
+      "change": 0.01,
       "unit": "%",
       "source": "FRED"
     },
