@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-05-05 15:29 UTC",
-  "updated_kst": "2026-05-06 00:29 KST",
+  "updated_utc": "2026-05-05 22:46 UTC",
+  "updated_kst": "2026-05-06 07:46 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-05-06",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-05-06",
-        "diff": -3.19,
+        "diff": -3.44,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 17.43,
+      "value": 17.38,
       "prev": 18.29,
-      "change": -0.86,
+      "change": -0.91,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 20.62,
+      "value": 20.82,
       "prev": 21.05,
-      "change": -0.43,
+      "change": -0.23,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -3.19,
+      "value": -3.44,
       "prev": -2.76,
-      "change": -0.43,
+      "change": -0.68,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 141.74,
-      "prev": 141.38,
-      "change": 0.36,
+      "value": 138.74,
+      "prev": 141.74,
+      "change": -3.0,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 74.78,
+      "value": 74.73,
       "prev": 78.63,
-      "change": -3.85,
+      "change": -3.9,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 26.9,
+      "value": 26.61,
       "prev": 27.92,
-      "change": -1.02,
+      "change": -1.31,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,30 +135,30 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 98.38,
+      "value": 98.49,
       "prev": 98.47,
-      "change": -0.09,
+      "change": 0.02,
       "unit": "",
       "source": "Yahoo"
     },
     "HY_SPREAD": {
-      "value": null,
-      "prev": null,
-      "change": null,
+      "value": 2.78,
+      "prev": 2.77,
+      "change": 0.01,
       "unit": "%",
       "source": "FRED"
     },
     "IG_SPREAD": {
-      "value": null,
-      "prev": null,
-      "change": null,
+      "value": 0.8,
+      "prev": 0.81,
+      "change": -0.01,
       "unit": "%",
       "source": "FRED"
     },
     "TED_SPREAD": {
       "value": 0.09,
-      "prev": null,
-      "change": null,
+      "prev": 0.08,
+      "change": 0.01,
       "unit": "bp",
       "source": "FRED"
     },
@@ -171,8 +171,8 @@
     },
     "T10Y2Y": {
       "value": 0.5,
-      "prev": 0.51,
-      "change": -0.01,
+      "prev": 0.5,
+      "change": 0.0,
       "unit": "%",
       "source": "FRED"
     },
