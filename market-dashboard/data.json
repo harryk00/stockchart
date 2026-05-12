@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-05-11 22:44 UTC",
-  "updated_kst": "2026-05-12 07:44 KST",
+  "updated_utc": "2026-05-12 08:25 UTC",
+  "updated_kst": "2026-05-12 17:25 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-05-12",
@@ -79,16 +79,16 @@
       },
       {
         "date": "2026-05-12",
-        "diff": -2.86,
+        "diff": -2.43,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 18.38,
-      "prev": 17.19,
-      "change": 1.19,
+      "value": 18.81,
+      "prev": 18.38,
+      "change": 0.43,
       "unit": "",
       "source": "Yahoo"
     },
@@ -100,9 +100,9 @@
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -2.86,
-      "prev": -3.31,
-      "change": 0.45,
+      "value": -2.43,
+      "prev": -2.12,
+      "change": -0.31,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,30 +135,30 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 97.9,
-      "prev": 97.84,
-      "change": 0.06,
+      "value": 98.3,
+      "prev": 97.94,
+      "change": 0.36,
       "unit": "",
       "source": "Yahoo"
     },
     "HY_SPREAD": {
       "value": 2.81,
-      "prev": null,
-      "change": null,
+      "prev": 2.79,
+      "change": 0.02,
       "unit": "%",
       "source": "FRED"
     },
     "IG_SPREAD": {
-      "value": null,
-      "prev": null,
-      "change": null,
+      "value": 0.79,
+      "prev": 0.79,
+      "change": 0.0,
       "unit": "%",
       "source": "FRED"
     },
     "TED_SPREAD": {
-      "value": null,
-      "prev": null,
-      "change": null,
+      "value": 0.09,
+      "prev": 0.08,
+      "change": 0.01,
       "unit": "bp",
       "source": "FRED"
     },
