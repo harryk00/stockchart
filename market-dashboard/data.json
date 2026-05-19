@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-05-18 22:49 UTC",
-  "updated_kst": "2026-05-19 07:49 KST",
+  "updated_utc": "2026-05-19 08:58 UTC",
+  "updated_kst": "2026-05-19 17:58 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-05-19",
@@ -79,16 +79,16 @@
       },
       {
         "date": "2026-05-19",
-        "diff": -3.1,
+        "diff": -2.89,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 17.82,
-      "prev": 18.43,
-      "change": -0.61,
+      "value": 18.03,
+      "prev": 17.82,
+      "change": 0.21,
       "unit": "",
       "source": "Yahoo"
     },
@@ -100,9 +100,9 @@
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -3.1,
-      "prev": -2.93,
-      "change": -0.17,
+      "value": -2.89,
+      "prev": -3.54,
+      "change": 0.65,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 98.95,
-      "prev": 99.27,
-      "change": -0.32,
+      "value": 99.21,
+      "prev": 98.97,
+      "change": 0.24,
       "unit": "",
       "source": "Yahoo"
     },
