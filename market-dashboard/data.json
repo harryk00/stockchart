@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-05-25 16:15 UTC",
-  "updated_kst": "2026-05-26 01:15 KST",
+  "updated_utc": "2026-05-25 22:51 UTC",
+  "updated_kst": "2026-05-26 07:51 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-05-26",
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 98.98,
+      "value": 99.24,
       "prev": 99.32,
-      "change": -0.34,
+      "change": -0.08,
       "unit": "",
       "source": "Yahoo"
     },
