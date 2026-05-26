@@ -9,7 +9,7 @@
 
 ## 🌐 라이브 데모
 
-👉 [https://harryk00.github.io/stockchart](https://harryk00.github.io/stockchart)
+👉 https://harryk00.github.io/stockchart/market-dashboard/ 
 
 ---
 
