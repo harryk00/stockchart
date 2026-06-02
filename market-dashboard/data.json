@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-06-02 17:59 UTC",
-  "updated_kst": "2026-06-03 02:59 KST",
+  "updated_utc": "2026-06-02 23:27 UTC",
+  "updated_kst": "2026-06-03 08:27 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-06-03",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-06-03",
-        "diff": -3.48,
+        "diff": -3.72,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 16.0,
+      "value": 15.77,
       "prev": 16.05,
-      "change": -0.05,
+      "change": -0.28,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 19.48,
+      "value": 19.49,
       "prev": 19.43,
-      "change": 0.05,
+      "change": 0.06,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -3.48,
+      "value": -3.72,
       "prev": -3.38,
-      "change": -0.1,
+      "change": -0.34,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 142.46,
-      "prev": 144.18,
-      "change": -1.72,
+      "value": 143.24,
+      "prev": 142.46,
+      "change": 0.78,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 60.24,
+      "value": 59.53,
       "prev": 61.24,
-      "change": -1.0,
+      "change": -1.71,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 24.53,
+      "value": 24.44,
       "prev": 25.64,
-      "change": -1.11,
+      "change": -1.2,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 99.28,
+      "value": 99.22,
       "prev": 99.2,
-      "change": 0.08,
+      "change": 0.02,
       "unit": "",
       "source": "Yahoo"
     },
@@ -150,7 +150,7 @@
     },
     "IG_SPREAD": {
       "value": null,
-      "prev": 0.74,
+      "prev": null,
       "change": null,
       "unit": "%",
       "source": "FRED"
@@ -163,7 +163,7 @@
       "source": "FRED"
     },
     "SOFR": {
-      "value": 3.65,
+      "value": null,
       "prev": null,
       "change": null,
       "unit": "%",
@@ -171,7 +171,7 @@
     },
     "T10Y2Y": {
       "value": null,
-      "prev": 0.47,
+      "prev": 0.42,
       "change": null,
       "unit": "%",
       "source": "FRED"
