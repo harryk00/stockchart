@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-06-02 23:27 UTC",
-  "updated_kst": "2026-06-03 08:27 KST",
+  "updated_utc": "2026-06-03 10:42 UTC",
+  "updated_kst": "2026-06-03 19:42 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-06-03",
@@ -79,16 +79,16 @@
       },
       {
         "date": "2026-06-03",
-        "diff": -3.72,
+        "diff": -3.43,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 15.77,
-      "prev": 16.05,
-      "change": -0.28,
+      "value": 16.06,
+      "prev": 15.77,
+      "change": 0.29,
       "unit": "",
       "source": "Yahoo"
     },
@@ -100,9 +100,9 @@
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -3.72,
-      "prev": -3.38,
-      "change": -0.34,
+      "value": -3.43,
+      "prev": -3.66,
+      "change": 0.23,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 99.22,
-      "prev": 99.2,
-      "change": 0.02,
+      "value": 99.34,
+      "prev": 99.22,
+      "change": 0.12,
       "unit": "",
       "source": "Yahoo"
     },
@@ -156,28 +156,28 @@
       "source": "FRED"
     },
     "TED_SPREAD": {
-      "value": 0.09,
-      "prev": 0.08,
-      "change": 0.01,
+      "value": null,
+      "prev": null,
+      "change": null,
       "unit": "bp",
       "source": "FRED"
     },
     "SOFR": {
+      "value": 3.65,
+      "prev": 3.63,
+      "change": 0.02,
+      "unit": "%",
+      "source": "FRED"
+    },
+    "T10Y2Y": {
       "value": null,
       "prev": null,
       "change": null,
       "unit": "%",
       "source": "FRED"
     },
-    "T10Y2Y": {
-      "value": null,
-      "prev": 0.42,
-      "change": null,
-      "unit": "%",
-      "source": "FRED"
-    },
     "STLFSI": {
-      "value": -0.761,
+      "value": null,
       "prev": null,
       "change": null,
       "unit": "",
