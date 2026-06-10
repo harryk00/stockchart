@@ -1,11 +1,11 @@
 {
-  "updated_utc": "2026-06-09 23:10 UTC",
-  "updated_kst": "2026-06-10 08:10 KST",
+  "updated_utc": "2026-06-10 09:39 UTC",
+  "updated_kst": "2026-06-10 18:39 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-06-10",
-    "status": "normal",
-    "is_backwardation": false,
+    "status": "warn",
+    "is_backwardation": true,
     "history": [
       {
         "date": "2026-05-25",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-06-10",
-        "diff": -1.44,
-        "backwardation": false
+        "diff": 0.43,
+        "backwardation": true
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 19.87,
+      "value": 21.22,
       "prev": 18.92,
-      "change": 0.95,
+      "change": 2.3,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 21.31,
-      "prev": 20.79,
-      "change": 0.52,
+      "value": 20.79,
+      "prev": 21.82,
+      "change": -1.03,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -1.44,
-      "prev": -1.87,
-      "change": 0.43,
+      "value": 0.43,
+      "prev": -2.9,
+      "change": 3.33,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 141.97,
-      "prev": 145.0,
-      "change": -3.03,
+      "value": 145.0,
+      "prev": 152.25,
+      "change": -7.25,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 57.63,
-      "prev": 58.36,
-      "change": -0.73,
+      "value": 58.36,
+      "prev": 57.75,
+      "change": 0.61,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 28.04,
-      "prev": 27.17,
-      "change": 0.87,
+      "value": 27.17,
+      "prev": 28.89,
+      "change": -1.72,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 100.0,
+      "value": 99.9,
       "prev": 100.05,
-      "change": -0.05,
+      "change": -0.15,
       "unit": "",
       "source": "Yahoo"
     },
