@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-06-17 23:16 UTC",
-  "updated_kst": "2026-06-18 08:16 KST",
+  "updated_utc": "2026-06-18 10:04 UTC",
+  "updated_kst": "2026-06-18 19:04 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-06-18",
@@ -79,30 +79,30 @@
       },
       {
         "date": "2026-06-18",
-        "diff": -2.18,
+        "diff": -3.49,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 18.44,
-      "prev": 16.41,
-      "change": 2.03,
+      "value": 17.02,
+      "prev": 18.44,
+      "change": -1.42,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 20.62,
-      "prev": 20.51,
-      "change": 0.11,
+      "value": 20.51,
+      "prev": 21.42,
+      "change": -0.91,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -2.18,
-      "prev": -4.1,
-      "change": 1.92,
+      "value": -3.49,
+      "prev": -2.98,
+      "change": -0.51,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 100.39,
-      "prev": 99.54,
-      "change": 0.85,
+      "value": 100.59,
+      "prev": 100.09,
+      "change": 0.5,
       "unit": "",
       "source": "Yahoo"
     },
@@ -177,9 +177,9 @@
       "source": "FRED"
     },
     "STLFSI": {
-      "value": -0.868,
-      "prev": -0.688,
-      "change": -0.18,
+      "value": -0.77,
+      "prev": -0.868,
+      "change": 0.098,
       "unit": "",
       "source": "FRED"
     }
