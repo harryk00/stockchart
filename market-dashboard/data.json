@@ -1,17 +1,12 @@
 {
-  "updated_utc": "2026-07-08 08:07 UTC",
-  "updated_kst": "2026-07-08 17:07 KST",
+  "updated_utc": "2026-07-08 15:56 UTC",
+  "updated_kst": "2026-07-09 00:56 KST",
   "backwardation": {
     "consecutive_days": 0,
-    "last_date": "2026-07-08",
+    "last_date": "2026-07-09",
     "status": "normal",
     "is_backwardation": false,
     "history": [
-      {
-        "date": "2026-06-22",
-        "diff": -2.23,
-        "backwardation": false
-      },
       {
         "date": "2026-06-23",
         "diff": 0.45,
@@ -81,28 +76,33 @@
         "date": "2026-07-08",
         "diff": -2.6,
         "backwardation": false
+      },
+      {
+        "date": "2026-07-09",
+        "diff": -1.93,
+        "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 16.44,
+      "value": 18.18,
       "prev": 16.13,
-      "change": 0.31,
+      "change": 2.05,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 19.04,
-      "prev": 19.16,
-      "change": -0.12,
+      "value": 20.11,
+      "prev": 19.04,
+      "change": 1.07,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -2.6,
-      "prev": -3.03,
-      "change": 0.43,
+      "value": -1.93,
+      "prev": -2.91,
+      "change": 0.98,
       "unit": "",
       "source": "Yahoo"
     },
@@ -114,16 +114,16 @@
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 47.59,
-      "prev": 40.33,
-      "change": 7.26,
+      "value": 52.7,
+      "prev": 47.59,
+      "change": 5.11,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 26.21,
-      "prev": 25.33,
-      "change": 0.88,
+      "value": 28.81,
+      "prev": 26.21,
+      "change": 2.6,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,23 +135,23 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 100.97,
+      "value": 101.27,
       "prev": 101.14,
-      "change": -0.17,
+      "change": 0.13,
       "unit": "",
       "source": "Yahoo"
     },
     "HY_SPREAD": {
-      "value": 2.72,
-      "prev": 2.74,
-      "change": -0.02,
+      "value": 2.67,
+      "prev": 2.72,
+      "change": -0.05,
       "unit": "%",
       "source": "FRED"
     },
     "IG_SPREAD": {
-      "value": 0.75,
+      "value": 0.76,
       "prev": 0.75,
-      "change": 0.0,
+      "change": 0.01,
       "unit": "%",
       "source": "FRED"
     },
@@ -163,8 +163,8 @@
       "source": "FRED"
     },
     "SOFR": {
-      "value": 3.63,
-      "prev": 3.64,
+      "value": 3.62,
+      "prev": 3.63,
       "change": -0.01,
       "unit": "%",
       "source": "FRED"
@@ -177,9 +177,9 @@
       "source": "FRED"
     },
     "STLFSI": {
-      "value": -0.644,
-      "prev": -0.957,
-      "change": 0.313,
+      "value": -0.725,
+      "prev": -0.646,
+      "change": -0.079,
       "unit": "",
       "source": "FRED"
     }
