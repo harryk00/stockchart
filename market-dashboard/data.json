@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-07-08 15:56 UTC",
-  "updated_kst": "2026-07-09 00:56 KST",
+  "updated_utc": "2026-07-08 22:55 UTC",
+  "updated_kst": "2026-07-09 07:55 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-07-09",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-07-09",
-        "diff": -1.93,
+        "diff": -2.56,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 18.18,
+      "value": 16.9,
       "prev": 16.13,
-      "change": 2.05,
+      "change": 0.77,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 20.11,
+      "value": 19.46,
       "prev": 19.04,
-      "change": 1.07,
+      "change": 0.42,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -1.93,
+      "value": -2.56,
       "prev": -2.91,
-      "change": 0.98,
+      "change": 0.35,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 145.74,
-      "prev": 145.38,
-      "change": 0.36,
+      "value": 149.79,
+      "prev": 145.74,
+      "change": 4.05,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 52.7,
+      "value": 50.45,
       "prev": 47.59,
-      "change": 5.11,
+      "change": 2.86,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 28.81,
+      "value": 27.6,
       "prev": 26.21,
-      "change": 2.6,
+      "change": 1.39,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 101.27,
+      "value": 101.07,
       "prev": 101.14,
-      "change": 0.13,
+      "change": -0.07,
       "unit": "",
       "source": "Yahoo"
     },
@@ -170,9 +170,9 @@
       "source": "FRED"
     },
     "T10Y2Y": {
-      "value": 0.36,
-      "prev": 0.35,
-      "change": 0.01,
+      "value": 0.35,
+      "prev": 0.36,
+      "change": -0.01,
       "unit": "%",
       "source": "FRED"
     },
