@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-07-23 15:47 UTC",
-  "updated_kst": "2026-07-24 00:47 KST",
+  "updated_utc": "2026-07-23 22:46 UTC",
+  "updated_kst": "2026-07-24 07:46 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-07-24",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-07-24",
-        "diff": -1.28,
+        "diff": -1.9,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 20.22,
+      "value": 18.7,
       "prev": 16.64,
-      "change": 3.58,
+      "change": 2.06,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 21.5,
+      "value": 20.6,
       "prev": 20.54,
-      "change": 0.96,
+      "change": 0.06,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -1.28,
+      "value": -1.9,
       "prev": -3.9,
-      "change": 2.62,
+      "change": 2.0,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 150.19,
-      "prev": 151.66,
-      "change": -1.47,
+      "value": 145.95,
+      "prev": 150.19,
+      "change": -4.24,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 70.43,
+      "value": 68.97,
       "prev": 65.31,
-      "change": 5.12,
+      "change": 3.66,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 25.39,
+      "value": 25.14,
       "prev": 24.02,
-      "change": 1.37,
+      "change": 1.12,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 101.54,
+      "value": 101.44,
       "prev": 101.14,
-      "change": 0.4,
+      "change": 0.3,
       "unit": "",
       "source": "Yahoo"
     },
@@ -170,9 +170,9 @@
       "source": "FRED"
     },
     "T10Y2Y": {
-      "value": 0.36,
-      "prev": 0.37,
-      "change": -0.01,
+      "value": 0.34,
+      "prev": 0.36,
+      "change": -0.02,
       "unit": "%",
       "source": "FRED"
     },
