@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-07-24 15:20 UTC",
-  "updated_kst": "2026-07-25 00:20 KST",
+  "updated_utc": "2026-07-24 22:52 UTC",
+  "updated_kst": "2026-07-25 07:52 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-07-25",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-07-25",
-        "diff": -1.91,
+        "diff": -1.93,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 18.64,
+      "value": 18.58,
       "prev": 18.7,
-      "change": -0.06,
+      "change": -0.12,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 20.55,
+      "value": 20.51,
       "prev": 20.54,
-      "change": 0.01,
+      "change": -0.03,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -1.91,
+      "value": -1.93,
       "prev": -1.84,
-      "change": -0.07,
+      "change": -0.09,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 145.95,
-      "prev": 150.19,
-      "change": -4.24,
+      "value": 147.28,
+      "prev": 145.95,
+      "change": 1.33,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 66.49,
+      "value": 68.0,
       "prev": 68.97,
-      "change": -2.48,
+      "change": -0.97,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 24.62,
+      "value": 24.33,
       "prev": 25.14,
-      "change": -0.52,
+      "change": -0.81,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 101.45,
+      "value": 101.46,
       "prev": 101.43,
-      "change": 0.02,
+      "change": 0.03,
       "unit": "",
       "source": "Yahoo"
     },
@@ -170,9 +170,9 @@
       "source": "FRED"
     },
     "T10Y2Y": {
-      "value": 0.34,
-      "prev": 0.36,
-      "change": -0.02,
+      "value": 0.36,
+      "prev": 0.34,
+      "change": 0.02,
       "unit": "%",
       "source": "FRED"
     },
