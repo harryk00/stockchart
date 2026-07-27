@@ -1,17 +1,12 @@
 {
-  "updated_utc": "2026-07-24 22:52 UTC",
-  "updated_kst": "2026-07-25 07:52 KST",
+  "updated_utc": "2026-07-27 09:30 UTC",
+  "updated_kst": "2026-07-27 18:30 KST",
   "backwardation": {
     "consecutive_days": 0,
-    "last_date": "2026-07-25",
+    "last_date": "2026-07-27",
     "status": "normal",
     "is_backwardation": false,
     "history": [
-      {
-        "date": "2026-07-09",
-        "diff": -2.3,
-        "backwardation": false
-      },
       {
         "date": "2026-07-10",
         "diff": -2.95,
@@ -81,49 +76,54 @@
         "date": "2026-07-25",
         "diff": -1.93,
         "backwardation": false
+      },
+      {
+        "date": "2026-07-27",
+        "diff": -2.86,
+        "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 18.58,
+      "value": 17.65,
       "prev": 18.7,
-      "change": -0.12,
+      "change": -1.05,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
       "value": 20.51,
-      "prev": 20.54,
-      "change": -0.03,
+      "prev": 19.5,
+      "change": 1.01,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -1.93,
-      "prev": -1.84,
-      "change": -0.09,
+      "value": -2.86,
+      "prev": -0.8,
+      "change": -2.06,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 147.28,
-      "prev": 145.95,
-      "change": 1.33,
+      "value": 145.95,
+      "prev": 150.19,
+      "change": -4.24,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 68.0,
-      "prev": 68.97,
-      "change": -0.97,
+      "value": 68.97,
+      "prev": 65.31,
+      "change": 3.66,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 24.33,
-      "prev": 25.14,
-      "change": -0.81,
+      "value": 25.14,
+      "prev": 24.02,
+      "change": 1.12,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 101.46,
+      "value": 101.27,
       "prev": 101.43,
-      "change": 0.03,
+      "change": -0.16,
       "unit": "",
       "source": "Yahoo"
     },
