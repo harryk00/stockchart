@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-07-27 22:51 UTC",
-  "updated_kst": "2026-07-28 07:51 KST",
+  "updated_utc": "2026-07-28 08:14 UTC",
+  "updated_kst": "2026-07-28 17:14 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-07-28",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-07-28",
-        "diff": -1.53,
+        "diff": -1.16,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 18.67,
-      "prev": 18.7,
-      "change": -0.03,
+      "value": 19.04,
+      "prev": 18.67,
+      "change": 0.37,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
       "value": 20.2,
-      "prev": 20.54,
-      "change": -0.34,
+      "prev": 19.5,
+      "change": 0.7,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -1.53,
-      "prev": -1.84,
-      "change": 0.31,
+      "value": -1.16,
+      "prev": -0.83,
+      "change": -0.33,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
       "value": 146.6,
-      "prev": 145.95,
-      "change": 0.65,
+      "prev": 147.28,
+      "change": -0.68,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
       "value": 60.62,
-      "prev": 68.97,
-      "change": -8.35,
+      "prev": 68.0,
+      "change": -7.38,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
       "value": 24.13,
-      "prev": 25.14,
-      "change": -1.01,
+      "prev": 24.33,
+      "change": -0.2,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 101.51,
-      "prev": 101.43,
-      "change": 0.08,
+      "value": 101.52,
+      "prev": 101.47,
+      "change": 0.05,
       "unit": "",
       "source": "Yahoo"
     },
