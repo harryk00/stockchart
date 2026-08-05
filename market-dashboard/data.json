@@ -1,17 +1,12 @@
 {
-  "updated_utc": "2026-08-05 08:16 UTC",
-  "updated_kst": "2026-08-05 17:16 KST",
+  "updated_utc": "2026-08-05 15:53 UTC",
+  "updated_kst": "2026-08-06 00:53 KST",
   "backwardation": {
     "consecutive_days": 0,
-    "last_date": "2026-08-05",
+    "last_date": "2026-08-06",
     "status": "normal",
     "is_backwardation": false,
     "history": [
-      {
-        "date": "2026-07-20",
-        "diff": -2.07,
-        "backwardation": false
-      },
       {
         "date": "2026-07-21",
         "diff": -2.91,
@@ -81,26 +76,31 @@
         "date": "2026-08-05",
         "diff": -3.44,
         "backwardation": false
+      },
+      {
+        "date": "2026-08-06",
+        "diff": -2.82,
+        "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 15.9,
+      "value": 16.34,
       "prev": 16.5,
-      "change": -0.6,
+      "change": -0.16,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 19.34,
+      "value": 19.16,
       "prev": null,
       "change": null,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -3.44,
+      "value": -2.82,
       "prev": null,
       "change": null,
       "unit": "",
@@ -114,16 +114,16 @@
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 53.45,
-      "prev": 57.2,
-      "change": -3.75,
+      "value": 50.7,
+      "prev": 53.45,
+      "change": -2.75,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 23.5,
-      "prev": 23.65,
-      "change": -0.15,
+      "value": 26.03,
+      "prev": 23.5,
+      "change": 2.53,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 99.83,
+      "value": 99.69,
       "prev": 99.89,
-      "change": -0.06,
+      "change": -0.2,
       "unit": "",
       "source": "Yahoo"
     },
@@ -163,9 +163,9 @@
       "source": "FRED"
     },
     "SOFR": {
-      "value": 3.65,
-      "prev": 3.66,
-      "change": -0.01,
+      "value": 3.66,
+      "prev": 3.65,
+      "change": 0.01,
       "unit": "%",
       "source": "FRED"
     },
