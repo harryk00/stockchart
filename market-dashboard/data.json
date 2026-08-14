@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-08-13 22:31 UTC",
-  "updated_kst": "2026-08-14 07:31 KST",
+  "updated_utc": "2026-08-14 07:08 UTC",
+  "updated_kst": "2026-08-14 16:08 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-08-14",
@@ -135,16 +135,16 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 99.95,
-      "prev": 100.01,
-      "change": -0.06,
+      "value": 99.82,
+      "prev": 99.96,
+      "change": -0.14,
       "unit": "",
       "source": "Yahoo"
     },
     "HY_SPREAD": {
       "value": 2.71,
-      "prev": null,
-      "change": null,
+      "prev": 2.72,
+      "change": -0.01,
       "unit": "%",
       "source": "FRED"
     },
@@ -171,8 +171,8 @@
     },
     "T10Y2Y": {
       "value": 0.48,
-      "prev": null,
-      "change": null,
+      "prev": 0.48,
+      "change": 0.0,
       "unit": "%",
       "source": "FRED"
     },
