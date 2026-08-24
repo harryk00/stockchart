@@ -1,17 +1,12 @@
 {
-  "updated_utc": "2026-08-21 22:12 UTC",
-  "updated_kst": "2026-08-22 07:12 KST",
+  "updated_utc": "2026-08-24 06:36 UTC",
+  "updated_kst": "2026-08-24 15:36 KST",
   "backwardation": {
     "consecutive_days": 0,
-    "last_date": "2026-08-22",
+    "last_date": "2026-08-24",
     "status": "normal",
     "is_backwardation": false,
     "history": [
-      {
-        "date": "2026-08-06",
-        "diff": -3.07,
-        "backwardation": false
-      },
       {
         "date": "2026-08-07",
         "diff": -3.74,
@@ -81,6 +76,11 @@
         "date": "2026-08-22",
         "diff": -3.37,
         "backwardation": false
+      },
+      {
+        "date": "2026-08-24",
+        "diff": -3.37,
+        "backwardation": false
       }
     ]
   },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 98.84,
-      "prev": 98.9,
-      "change": -0.06,
+      "value": 98.88,
+      "prev": 98.8,
+      "change": 0.08,
       "unit": "",
       "source": "Yahoo"
     },
