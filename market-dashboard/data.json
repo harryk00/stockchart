@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-10-02 18:48 UTC",
-  "updated_kst": "2026-10-03 03:48 KST",
+  "updated_utc": "2026-10-03 00:49 UTC",
+  "updated_kst": "2026-10-03 09:49 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-10-03",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-10-03",
-        "diff": -2.62,
+        "diff": -2.7,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 15.56,
+      "value": 15.31,
       "prev": 16.39,
-      "change": -0.83,
+      "change": -1.08,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 18.18,
+      "value": 18.01,
       "prev": 18.58,
-      "change": -0.4,
+      "change": -0.57,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -2.62,
+      "value": -2.7,
       "prev": -2.19,
-      "change": -0.43,
+      "change": -0.51,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 142.77,
-      "prev": 141.92,
-      "change": 0.85,
+      "value": 144.88,
+      "prev": 142.77,
+      "change": 2.11,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 51.45,
+      "value": 51.0,
       "prev": 51.69,
-      "change": -0.24,
+      "change": -0.69,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 23.29,
+      "value": 23.23,
       "prev": 23.32,
-      "change": -0.03,
+      "change": -0.09,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 101.93,
+      "value": 101.92,
       "prev": 102.1,
-      "change": -0.17,
+      "change": -0.18,
       "unit": "",
       "source": "Yahoo"
     },
@@ -170,9 +170,9 @@
       "source": "FRED"
     },
     "T10Y2Y": {
-      "value": 0.46,
-      "prev": 0.41,
-      "change": 0.05,
+      "value": 0.45,
+      "prev": 0.46,
+      "change": -0.01,
       "unit": "%",
       "source": "FRED"
     },
