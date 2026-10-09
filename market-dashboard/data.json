@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-10-08 19:33 UTC",
-  "updated_kst": "2026-10-09 04:33 KST",
+  "updated_utc": "2026-10-09 01:33 UTC",
+  "updated_kst": "2026-10-09 10:33 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-10-09",
@@ -79,51 +79,51 @@
       },
       {
         "date": "2026-10-09",
-        "diff": -2.56,
+        "diff": -2.67,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 15.64,
+      "value": 15.41,
       "prev": 15.08,
-      "change": 0.56,
+      "change": 0.33,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 18.2,
+      "value": 18.08,
       "prev": 17.72,
-      "change": 0.48,
+      "change": 0.36,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -2.56,
+      "value": -2.67,
       "prev": -2.64,
-      "change": 0.08,
+      "change": -0.03,
       "unit": "",
       "source": "Yahoo"
     },
     "SKEW": {
-      "value": 141.84,
-      "prev": 141.21,
-      "change": 0.63,
+      "value": 149.19,
+      "prev": 141.84,
+      "change": 7.35,
       "unit": "",
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 48.32,
+      "value": 48.4,
       "prev": 48.61,
-      "change": -0.29,
+      "change": -0.21,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 22.78,
+      "value": 22.68,
       "prev": 23.39,
-      "change": -0.61,
+      "change": -0.71,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 102.12,
+      "value": 102.02,
       "prev": 102.24,
-      "change": -0.12,
+      "change": -0.22,
       "unit": "",
       "source": "Yahoo"
     },
@@ -170,9 +170,9 @@
       "source": "FRED"
     },
     "T10Y2Y": {
-      "value": 0.51,
-      "prev": 0.48,
-      "change": 0.03,
+      "value": 0.47,
+      "prev": 0.51,
+      "change": -0.04,
       "unit": "%",
       "source": "FRED"
     },
