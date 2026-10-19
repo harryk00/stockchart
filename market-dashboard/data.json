@@ -1,17 +1,12 @@
 {
-  "updated_utc": "2026-10-19 11:33 UTC",
-  "updated_kst": "2026-10-19 20:33 KST",
+  "updated_utc": "2026-10-19 19:33 UTC",
+  "updated_kst": "2026-10-20 04:33 KST",
   "backwardation": {
     "consecutive_days": 0,
-    "last_date": "2026-10-19",
+    "last_date": "2026-10-20",
     "status": "normal",
     "is_backwardation": false,
     "history": [
-      {
-        "date": "2026-10-02",
-        "diff": -2.62,
-        "backwardation": false
-      },
       {
         "date": "2026-10-03",
         "diff": -2.7,
@@ -81,28 +76,33 @@
         "date": "2026-10-19",
         "diff": -1.84,
         "backwardation": false
+      },
+      {
+        "date": "2026-10-20",
+        "diff": -1.28,
+        "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 18.66,
+      "value": 18.17,
       "prev": 19.99,
-      "change": -1.33,
+      "change": -1.82,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 20.5,
-      "prev": 18.49,
-      "change": 2.01,
+      "value": 19.45,
+      "prev": 20.5,
+      "change": -1.05,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -1.84,
-      "prev": 1.5,
-      "change": -3.34,
+      "value": -1.28,
+      "prev": -0.51,
+      "change": -0.77,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,23 +135,23 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 101.78,
+      "value": 101.99,
       "prev": 101.84,
-      "change": -0.06,
+      "change": 0.15,
       "unit": "",
       "source": "Yahoo"
     },
     "HY_SPREAD": {
-      "value": 3.23,
-      "prev": 3.25,
-      "change": -0.02,
+      "value": 3.31,
+      "prev": 3.23,
+      "change": 0.08,
       "unit": "%",
       "source": "FRED"
     },
     "IG_SPREAD": {
-      "value": 0.84,
+      "value": 0.85,
       "prev": 0.84,
-      "change": 0.0,
+      "change": 0.01,
       "unit": "%",
       "source": "FRED"
     },
@@ -163,9 +163,9 @@
       "source": "FRED"
     },
     "SOFR": {
-      "value": 3.89,
-      "prev": 3.88,
-      "change": 0.01,
+      "value": 3.88,
+      "prev": 3.89,
+      "change": -0.01,
       "unit": "%",
       "source": "FRED"
     },
@@ -177,9 +177,9 @@
       "source": "FRED"
     },
     "STLFSI": {
-      "value": -0.721,
+      "value": null,
       "prev": -0.468,
-      "change": -0.253,
+      "change": null,
       "unit": "",
       "source": "FRED"
     }
