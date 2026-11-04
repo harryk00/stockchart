@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-11-04 01:45 UTC",
-  "updated_kst": "2026-11-04 10:45 KST",
+  "updated_utc": "2026-11-04 13:28 UTC",
+  "updated_kst": "2026-11-04 22:28 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-11-04",
@@ -79,16 +79,16 @@
       },
       {
         "date": "2026-11-04",
-        "diff": -0.44,
+        "diff": -2.77,
         "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 20.83,
-      "prev": 21.15,
-      "change": -0.32,
+      "value": 18.5,
+      "prev": 20.83,
+      "change": -2.33,
       "unit": "",
       "source": "Yahoo"
     },
@@ -100,9 +100,9 @@
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -0.44,
-      "prev": -0.45,
-      "change": 0.01,
+      "value": -2.77,
+      "prev": -0.77,
+      "change": -2.0,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 101.4,
-      "prev": 101.75,
-      "change": -0.35,
+      "value": 101.27,
+      "prev": 101.87,
+      "change": -0.6,
       "unit": "",
       "source": "Yahoo"
     },
@@ -163,9 +163,9 @@
       "source": "FRED"
     },
     "SOFR": {
-      "value": 3.95,
+      "value": 3.97,
       "prev": 3.95,
-      "change": 0.0,
+      "change": 0.02,
       "unit": "%",
       "source": "FRED"
     },
