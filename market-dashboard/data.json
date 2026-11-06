@@ -1,17 +1,12 @@
 {
-  "updated_utc": "2026-11-06 13:26 UTC",
-  "updated_kst": "2026-11-06 22:26 KST",
+  "updated_utc": "2026-11-06 20:09 UTC",
+  "updated_kst": "2026-11-07 05:09 KST",
   "backwardation": {
-    "consecutive_days": 1,
-    "last_date": "2026-11-06",
+    "consecutive_days": 2,
+    "last_date": "2026-11-07",
     "status": "warn",
     "is_backwardation": true,
     "history": [
-      {
-        "date": "2026-10-21",
-        "diff": -1.51,
-        "backwardation": false
-      },
       {
         "date": "2026-10-22",
         "diff": -0.56,
@@ -81,28 +76,33 @@
         "date": "2026-11-06",
         "diff": 1.87,
         "backwardation": true
+      },
+      {
+        "date": "2026-11-07",
+        "diff": 0.8,
+        "backwardation": true
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 27.42,
+      "value": 24.6,
       "prev": 28.18,
-      "change": -0.76,
+      "change": -3.58,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 25.55,
-      "prev": 18.8,
-      "change": 6.75,
+      "value": 23.8,
+      "prev": 25.55,
+      "change": -1.75,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": 1.87,
-      "prev": 9.38,
-      "change": -7.51,
+      "value": 0.8,
+      "prev": 2.63,
+      "change": -1.83,
       "unit": "",
       "source": "Yahoo"
     },
@@ -114,16 +114,16 @@
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 60.29,
-      "prev": 58.81,
-      "change": 1.48,
+      "value": 59.31,
+      "prev": 60.29,
+      "change": -0.98,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 25.83,
-      "prev": 24.11,
-      "change": 1.72,
+      "value": 26.06,
+      "prev": 25.83,
+      "change": 0.23,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,23 +135,23 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 102.05,
+      "value": 102.31,
       "prev": 101.55,
-      "change": 0.5,
+      "change": 0.76,
       "unit": "",
       "source": "Yahoo"
     },
     "HY_SPREAD": {
-      "value": 3.32,
-      "prev": 3.4,
-      "change": -0.08,
+      "value": 3.48,
+      "prev": 3.32,
+      "change": 0.16,
       "unit": "%",
       "source": "FRED"
     },
     "IG_SPREAD": {
-      "value": 0.91,
-      "prev": 0.93,
-      "change": -0.02,
+      "value": 0.93,
+      "prev": 0.91,
+      "change": 0.02,
       "unit": "%",
       "source": "FRED"
     },
