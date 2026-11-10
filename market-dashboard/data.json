@@ -1,11 +1,11 @@
 {
-  "updated_utc": "2026-11-10 03:53 UTC",
-  "updated_kst": "2026-11-10 12:53 KST",
+  "updated_utc": "2026-11-10 13:56 UTC",
+  "updated_kst": "2026-11-10 22:56 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-11-10",
-    "status": "normal",
-    "is_backwardation": false,
+    "status": "warn",
+    "is_backwardation": true,
     "history": [
       {
         "date": "2026-10-24",
@@ -79,16 +79,16 @@
       },
       {
         "date": "2026-11-10",
-        "diff": -0.93,
-        "backwardation": false
+        "diff": 0.64,
+        "backwardation": true
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 19.92,
-      "prev": 25.64,
-      "change": -5.72,
+      "value": 21.49,
+      "prev": 19.92,
+      "change": 1.57,
       "unit": "",
       "source": "Yahoo"
     },
@@ -100,9 +100,9 @@
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": -0.93,
-      "prev": 1.04,
-      "change": -1.97,
+      "value": 0.64,
+      "prev": -4.68,
+      "change": 5.32,
       "unit": "",
       "source": "Yahoo"
     },
@@ -114,16 +114,16 @@
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 57.37,
+      "value": 57.2,
       "prev": 58.29,
-      "change": -0.92,
+      "change": -1.09,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 24.79,
+      "value": 24.93,
       "prev": 25.97,
-      "change": -1.18,
+      "change": -1.04,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 101.67,
-      "prev": 102.3,
-      "change": -0.63,
+      "value": 102.0,
+      "prev": 101.65,
+      "change": 0.35,
       "unit": "",
       "source": "Yahoo"
     },
@@ -163,9 +163,9 @@
       "source": "FRED"
     },
     "SOFR": {
-      "value": 3.89,
-      "prev": 3.92,
-      "change": -0.03,
+      "value": 3.88,
+      "prev": 3.89,
+      "change": -0.01,
       "unit": "%",
       "source": "FRED"
     },
