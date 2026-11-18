@@ -1,11 +1,11 @@
 {
-  "updated_utc": "2026-11-18 03:13 UTC",
-  "updated_kst": "2026-11-18 12:13 KST",
+  "updated_utc": "2026-11-18 14:46 UTC",
+  "updated_kst": "2026-11-18 23:46 KST",
   "backwardation": {
     "consecutive_days": 0,
     "last_date": "2026-11-18",
-    "status": "warn",
-    "is_backwardation": true,
+    "status": "normal",
+    "is_backwardation": false,
     "history": [
       {
         "date": "2026-11-02",
@@ -79,30 +79,30 @@
       },
       {
         "date": "2026-11-18",
-        "diff": 0.48,
-        "backwardation": true
+        "diff": 0.0,
+        "backwardation": false
       }
     ]
   },
   "indicators": {
     "VIX": {
-      "value": 25.46,
-      "prev": 22.91,
-      "change": 2.55,
+      "value": 24.12,
+      "prev": 25.46,
+      "change": -1.34,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX3M": {
-      "value": 24.98,
-      "prev": 23.02,
-      "change": 1.96,
+      "value": 24.12,
+      "prev": 24.98,
+      "change": -0.86,
       "unit": "",
       "source": "Yahoo"
     },
     "VIX_DIFF": {
-      "value": 0.48,
-      "prev": -0.11,
-      "change": 0.59,
+      "value": 0.0,
+      "prev": 0.48,
+      "change": -0.48,
       "unit": "",
       "source": "Yahoo"
     },
@@ -114,16 +114,16 @@
       "source": "Yahoo"
     },
     "OVX": {
-      "value": 49.9,
-      "prev": 49.59,
-      "change": 0.31,
+      "value": 49.36,
+      "prev": 49.9,
+      "change": -0.54,
       "unit": "",
       "source": "Yahoo"
     },
     "GVZ": {
-      "value": 26.46,
-      "prev": 26.42,
-      "change": 0.04,
+      "value": 26.79,
+      "prev": 26.46,
+      "change": 0.33,
       "unit": "",
       "source": "Yahoo"
     },
@@ -135,9 +135,9 @@
       "source": "Yahoo"
     },
     "DXY": {
-      "value": 103.63,
-      "prev": 103.55,
-      "change": 0.08,
+      "value": 103.79,
+      "prev": 103.49,
+      "change": 0.3,
       "unit": "",
       "source": "Yahoo"
     },
@@ -163,9 +163,9 @@
       "source": "FRED"
     },
     "SOFR": {
-      "value": 3.93,
-      "prev": 3.9,
-      "change": 0.03,
+      "value": 3.92,
+      "prev": 3.93,
+      "change": -0.01,
       "unit": "%",
       "source": "FRED"
     },
